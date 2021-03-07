@@ -4,7 +4,6 @@ import { createRxDatabase, addRxPlugin } from "rxdb";
 
 //plugins use By RxDb
 import { RxDBValidatePlugin } from "rxdb/plugins/validate";
-import { RxDBDevModePlugin } from "rxdb/plugins/dev-mode";
 import * as PouchdbAdapterIdb from "pouchdb-adapter-idb";
 import { RxDBReplicationPlugin } from "rxdb/plugins/replication";
 import { RxDBQueryBuilderPlugin } from "rxdb/plugins/query-builder";

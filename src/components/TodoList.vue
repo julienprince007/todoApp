@@ -1,5 +1,4 @@
 <template>
-  <div></div>
   <div
     v-if="tasks.length > 0"
     class="q-pa-xl column justify-content"
@@ -43,7 +42,7 @@
                 round
                 @click="removeTodo(task)"
                 icon="delete"
-              ></q-btn>
+              />
               <q-btn
                 class="gt-xs"
                 size="12px"
@@ -52,8 +51,18 @@
                 dense
                 round
                 @click="toggleTodo(task)"
-                icon="done"
-              ></q-btn>
+                :icon="task.isCompleted ? 'history' : 'done'"
+              />
+              <q-btn
+                class="gt-xs"
+                size="12px"
+                flat
+                color="blue"
+                dense
+                round
+                @click="updateText(task)"
+                icon="edit"
+              />
             </div>
           </q-item-section>
         </q-item>
@@ -64,6 +73,7 @@
 
 <script>
 import { defineComponent, ref, inject, onMounted } from "vue";
+import { useQuasar } from "quasar";
 
 export default defineComponent({
   name: "TodoList",
@@ -71,8 +81,10 @@ export default defineComponent({
   setup() {
     // Injection DB
     const DB = inject("DB");
+
     const tasks = ref([]);
 
+    const $q = useQuasar();
     onMounted(() => {
       DB.todos
         .find()
@@ -85,8 +97,8 @@ export default defineComponent({
         });
     });
 
-    async function clearAll() {
-      if (this.todos) await this.todos.map((task) => task.remove());
+    function clearAll() {
+      if (tasks.value) tasks.value.map((task) => task.remove());
     }
 
     function clearAllDone() {
@@ -113,6 +125,26 @@ export default defineComponent({
       });
     }
 
+    function updateText(todo) {
+      $q.dialog({
+        title: "Modification",
+        dark: true,
+        prompt: {
+          model: todo.text,
+        },
+        cancel: true,
+        persistent: true,
+      }).onOk((data) => {
+        if (data) {
+          todo.update({
+            $set: {
+              text: data,
+            },
+          });
+        }
+      });
+    }
+
     return {
       tasks,
       DB,
@@ -121,6 +153,7 @@ export default defineComponent({
       rowClass,
       removeTodo,
       toggleTodo,
+      updateText,
     };
   },
 });

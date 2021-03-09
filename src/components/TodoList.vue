@@ -74,28 +74,14 @@
 <script>
 import { defineComponent, ref, inject, onMounted } from "vue";
 import { useQuasar } from "quasar";
+import getTask from "../getTask/getTask";
 
 export default defineComponent({
   name: "TodoList",
 
   setup() {
-    // Injection DB
-    const DB = inject("DB");
-
-    const tasks = ref([]);
-
+    const { tasks, DB } = getTask();
     const $q = useQuasar();
-    onMounted(() => {
-      DB.todos
-        .find()
-        .sort("created_at")
-        .$.subscribe((todos) => {
-          if (!todos) {
-            return;
-          }
-          tasks.value = todos;
-        });
-    });
 
     function clearAll() {
       if (tasks.value) tasks.value.map((task) => task.remove());
@@ -158,7 +144,7 @@ export default defineComponent({
   },
 });
 </script>
-<style>
+<style scoped>
 .textThrough {
   text-decoration: line-through;
 }

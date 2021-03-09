@@ -74,6 +74,7 @@ export default async ({ app }) => {
       queryBuilder: pullQueryBuilder,
     },
     live: true,
+    liveInterval: 60 * 1000,
     deletedFlag: "deleted",
   });
   // Error log

@@ -1,5 +1,5 @@
 // import something here
-import todoSchema from "../RxDB/TodoSchema";
+import todoSchema from "./Replication/TodoSchema";
 import { createRxDatabase, addRxPlugin } from "rxdb";
 
 //plugins use By RxDb

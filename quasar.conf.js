@@ -9,7 +9,7 @@
 /* eslint-env node */
 const ESLintPlugin = require("eslint-webpack-plugin");
 const { configure } = require("quasar/wrappers");
-
+const envparser = require("./src/config/envparser.js");
 module.exports = configure(function (/* ctx */) {
   return {
     // https://quasar.dev/quasar-cli/supporting-ts
@@ -21,7 +21,7 @@ module.exports = configure(function (/* ctx */) {
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
     // https://quasar.dev/quasar-cli/boot-files
-    boot: ["InitLocalDatabase", "RxDBReplication"],
+    boot: ["InitLocalDatabase", "Replication/RxDBReplication"],
 
     // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-css
     css: ["app.sass"],
@@ -43,7 +43,7 @@ module.exports = configure(function (/* ctx */) {
     // Full list of options: https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-build
     build: {
       vueRouterMode: "hash", // available values: 'hash', 'history'
-
+      env: envparser(),
       // transpile: false,
 
       // Add dependencies for transpiling with Babel (Array of string/regex)

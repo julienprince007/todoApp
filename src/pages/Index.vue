@@ -12,9 +12,8 @@
 
 <script>
 import { defineComponent } from "vue";
-import NewTodo from "components/NewTodo";
-import TodoList from "components/TodoList";
-// import * as Replication from "../services/Replication";
+import NewTodo from "components/Todo/New";
+import TodoList from "components/Todo/List";
 
 export default defineComponent({
   name: "PageIndex",

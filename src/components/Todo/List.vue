@@ -22,7 +22,7 @@
         class="rounded-borders"
         style="width: 100%; margin: 5px"
       >
-        <Item :text="task.text" :todo= "task" :isCompleted ="task.isCompleted"/>
+        <Item :text="task.text" :todo="task" :isCompleted="task.isCompleted" />
       </q-list>
     </div>
   </div>
@@ -73,8 +73,3 @@ export default defineComponent({
   },
 });
 </script>
-<style>
-.textThrough {
-  text-decoration: line-through;
-}
-</style>

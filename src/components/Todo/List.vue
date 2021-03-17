@@ -31,6 +31,8 @@
 <script>
 import { defineComponent, ref, inject, onMounted } from "vue";
 import Item from "./Item";
+import { useQuasar } from "quasar";
+import { useStore } from "vuex";
 
 export default defineComponent({
   name: "TodoList",
@@ -39,6 +41,9 @@ export default defineComponent({
   setup() {
     // Injection DB
     const DB = inject("DB");
+    const $q = useQuasar();
+    const token = $q.localStorage.getItem("token");
+    const store = useStore();
 
     const tasks = ref([]);
     onMounted(() => {
@@ -51,6 +56,9 @@ export default defineComponent({
           }
           tasks.value = todos;
         });
+      if (token) {
+        store.commit("auth/SET_TOKEN", token);
+      }
     });
 
     function clearAllDone() {

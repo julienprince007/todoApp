@@ -3,6 +3,14 @@
     <q-header elevated>
       <q-toolbar>
         <q-toolbar-title> Todo App </q-toolbar-title>
+        <q-btn
+          v-if="token"
+          @click="logout"
+          flat
+          icon-right="account_circle"
+          label="Se déconnecter"
+          class="absolute-right"
+        />
       </q-toolbar>
     </q-header>
     <q-page-container>
@@ -12,7 +20,8 @@
 </template>
 
 <script>
-import { defineComponent } from "vue";
+import { defineComponent, computed } from "vue";
+import { useStore } from "vuex";
 
 export default defineComponent({
   name: "MainLayout",
@@ -20,7 +29,13 @@ export default defineComponent({
   components: {},
 
   setup() {
-    return {};
+    const store = useStore();
+    const token = computed(() => store.getters["auth/isSignedIn"]);
+
+    function logout() {
+      store.dispatch("auth/logoutUser");
+    }
+    return { token, logout };
   },
 });
 </script>

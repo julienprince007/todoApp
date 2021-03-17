@@ -21,7 +21,11 @@ module.exports = configure(function (/* ctx */) {
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
     // https://quasar.dev/quasar-cli/boot-files
-    boot: ["InitLocalDatabase", "Replication/RxDBReplication"],
+    boot: [
+      "InitLocalDatabase",
+      "Replication/RxDBReplication",
+      "navigation-guards",
+    ],
 
     // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-css
     css: ["app.sass"],
@@ -73,7 +77,7 @@ module.exports = configure(function (/* ctx */) {
     devServer: {
       https: false,
       port: 8080,
-      open: ['google chrome'], // opens browser window automatically
+      open: ["google chrome"], // opens browser window automatically
     },
 
     // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-framework
@@ -91,7 +95,7 @@ module.exports = configure(function (/* ctx */) {
       // directives: [],
 
       // Quasar plugins
-      plugins: ["Dialog"],
+      plugins: ["Dialog", "LocalStorage"],
     },
 
     // animations: 'all', // --- includes all animations

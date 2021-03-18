@@ -56,7 +56,7 @@ export default defineComponent({
           }
           tasks.value = todos;
         });
-      if (token) {
+      if (token && store.getters["auth/isSignedIn"] === null) {
         store.commit("auth/SET_TOKEN", token);
       }
     });

@@ -1,5 +1,6 @@
 import { api } from "boot/axios";
 import { LocalStorage } from "quasar";
+import { Notify } from "quasar";
 
 const state = {
   token: null,
@@ -28,13 +29,17 @@ const actions = {
         that.$router.push("/");
       })
       .catch(function (error) {
-        console.log(error.response);
+        Notify.create({
+          type: "negative",
+          position: "top",
+          message: error.response.data.error + ".Verifier votre identifiant!",
+        });
       });
   },
 
-  logoutUser({ commit}) {
+  logoutUser({ commit }) {
     const that = this;
-    commit("SET_CLEAR")
+    commit("SET_CLEAR");
     LocalStorage.clear();
     that.$router.push("/login");
   },

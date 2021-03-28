@@ -25,6 +25,7 @@ module.exports = configure(function (/* ctx */) {
       "InitLocalDatabase",
       "Replication/RxDBReplication",
       "navigation-guards",
+      "apollo",
     ],
 
     // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-css

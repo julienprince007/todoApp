@@ -10,34 +10,46 @@
         autocomplete="new-password"
       />
       <div class="row justify-center">
-        <q-btn type="submit" color="primary" label="connexion" />
+        <q-btn
+          type="submit"
+          :loading="loading"
+          color="primary"
+          label="login"
+          style="width: 200px"
+        >
+          <template v-slot:loading>
+            <q-spinner-hourglass class="on-left" />
+            Loading...
+          </template>
+        </q-btn>
       </div>
     </q-form>
   </div>
 </template>
 
 <script>
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, computed } from "vue";
 import { useStore } from "vuex";
 
 export default defineComponent({
   name: "LoginPAge",
   setup() {
+    const store = useStore();
     const user = ref({
       email: null,
       password: null,
     });
-    const store = useStore();
+    const loading = computed(() => store.getters["auth/loading"]);
 
     function onSubmit() {
       if (user.value.email !== null && user.value.password !== null) {
         store.dispatch("auth/connectUser", user.value);
       }
     }
-
     return {
       user,
       onSubmit,
+      loading,
     };
   },
 });

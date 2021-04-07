@@ -4,10 +4,7 @@ A Quasar Framework app
 
 # Prerequisite
 
-- ngrok installer ou equivalent:
-  - Pour exposer l'endpoint local ex: http:localhost:8000 du serveur. pour un serveur local
-- change le parametre a recuperer côté rails.
-  - les parametres son dans le input au lieu de body.
+- instalation du plugin Todo
 
 ## Install the dependencies
 

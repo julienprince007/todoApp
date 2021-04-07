@@ -28,12 +28,15 @@
 </template>
 
 <script>
-import { defineComponent, ref, computed } from "vue";
+import { defineComponent, ref, computed, inject } from "vue";
 import { useStore } from "vuex";
+import { useQuasar } from "quasar";
 
 export default defineComponent({
   name: "LoginPAge",
   setup() {
+    const $q = useQuasar();
+    const API = inject("API");
     const store = useStore();
     const user = ref({
       email: null,
@@ -43,7 +46,21 @@ export default defineComponent({
 
     function onSubmit() {
       if (user.value.email !== null && user.value.password !== null) {
-        store.dispatch("auth/connectUser", user.value);
+        store.commit("auth/SET_LOADING");
+        API.post("users/sign_in", user.value)
+          .then(function (response) {
+            store.commit("auth/SET_TOKEN", response.data.token);
+            store.commit("auth/SET_LOADING_END");
+          })
+          .catch(function (error) {
+            $q.notify({
+              type: "negative",
+              position: "top",
+              message:
+                error.response.data.error + ".Verifier votre identifiant!",
+            });
+            store.commit("auth/SET_LOADING_END");
+          });
       }
     }
     return {

@@ -1,7 +1,4 @@
-import { apolloClient } from "boot/apollo";
 import { LocalStorage } from "quasar";
-import { Notify } from "quasar";
-import { LOGIN } from "./GQL/login";
 
 const state = {
   token: null,
@@ -14,6 +11,8 @@ const mutations = {
   },
   SET_TOKEN(state, token) {
     state.token = token;
+    LocalStorage.set("token", state.token);
+    this.$router.push("/");
   },
   SET_CLEAR(state) {
     state.token = null;
@@ -28,34 +27,6 @@ const mutations = {
 };
 
 const actions = {
-  connectUser({ commit }, payload) {
-    commit("SET_LOADING");
-    const email = payload.email;
-    const password = payload.password;
-    const that = this;
-    apolloClient
-      .mutate({
-        mutation: LOGIN,
-        variables: { email: email, password: password },
-      })
-      .then((res) => {
-        commit("SET_TOKEN", res.data.login.token);
-        LocalStorage.set("token", state.token);
-        commit("SET_LOADING_END");
-        that.$router.push("/");
-      })
-      .catch((error) => {
-        const message =
-          error.graphQLErrors[0].extensions.internal.response.body.error;
-        Notify.create({
-          type: "negative",
-          position: "top",
-          message: message + ".Verifier votre identifiant!",
-        });
-        commit("SET_LOADING_END");
-      });
-  },
-
   logoutUser({ commit }) {
     const that = this;
     commit("SET_CLEAR");

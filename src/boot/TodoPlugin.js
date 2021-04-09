@@ -1,5 +1,6 @@
-import todoBase from "todo-plugin";
+import * as database from "poctodoplugin";
 
-export default ({ Vue }) => {
-  Vue.use(todoBase);
+export default async ({ app }) => {
+  const db = await database.createDb();
+  app.provide("DB", db);
 };

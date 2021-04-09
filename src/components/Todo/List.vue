@@ -30,6 +30,7 @@
 
 <script>
 import { defineComponent, ref, inject, onMounted } from "vue";
+
 import Item from "./Item";
 import { useQuasar } from "quasar";
 import { useStore } from "vuex";
@@ -43,6 +44,7 @@ export default defineComponent({
     const DB = inject("DB");
     const $q = useQuasar();
     const token = $q.localStorage.getItem("token");
+
     const store = useStore();
 
     const tasks = ref([]);
@@ -74,7 +76,6 @@ export default defineComponent({
 
     return {
       tasks,
-      DB,
       clearAll,
       clearAllDone,
     };

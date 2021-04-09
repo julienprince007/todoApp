@@ -42,7 +42,6 @@ export default defineComponent({
     return {
       todoName,
       onSubmit,
-      DB,
     };
   },
 });

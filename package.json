@@ -15,6 +15,7 @@
     "core-js": "^3.6.5",
     "graphql": "^15.5.0",
     "node-fetch": "^2.6.1",
+    "plugin-user": "^1.0.0",
     "poctodoplugin": "^1.0.2",
     "pouchdb-adapter-idb": "^7.2.2",
     "quasar": "^2.0.0-beta.1",

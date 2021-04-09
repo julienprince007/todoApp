@@ -23,7 +23,7 @@ export default defineComponent({
   setup() {
     const todoName = ref("");
     // Injection DB
-    const DB = inject("DB");
+    const DBTodo = inject("DBTodo");
 
     const onSubmit = async () => {
       if (todoName.value != "") {
@@ -34,7 +34,7 @@ export default defineComponent({
           created_at: new Date().toISOString(),
           updated_at: new Date().toISOString(),
         };
-        await DB.todos.insert(obj);
+        await DBTodo.todos.insert(obj);
         todoName.value = "";
       }
     };

@@ -15,7 +15,8 @@ import { defineComponent, onMounted } from "vue";
 import NewTodo from "components/Todo/New";
 import TodoList from "components/Todo/List";
 import { useQuasar } from "quasar";
-import * as replication from "poctodoplugin/src/replication";
+import * as todoReplication from "poctodoplugin/src/replication";
+import * as UserReplication from "plugin-user/src/replication";
 
 export default defineComponent({
   name: "PageIndex",
@@ -32,7 +33,8 @@ export default defineComponent({
     const urlsync = process.env.SYNCURL;
 
     onMounted(() => {
-      replication.initReplication(token, secret, urlweb, urlsync);
+      todoReplication.initReplication(token, secret, urlweb, urlsync);
+      UserReplication.initReplication(token, secret, urlweb, urlsync);
     });
   },
 });

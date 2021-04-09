@@ -24,6 +24,16 @@
       >
         <Item :text="task.text" :todo="task" :isCompleted="task.isCompleted" />
       </q-list>
+      <h2>List User</h2>
+      <q-list
+        v-for="user in users"
+        :key="user.id"
+        bordered
+        class="rounded-borders"
+        style="width: 100%; margin: 5px"
+      >
+        <Item :text="user.last_name" />
+      </q-list>
     </div>
   </div>
 </template>
@@ -41,15 +51,18 @@ export default defineComponent({
 
   setup() {
     // Injection DB
-    const DB = inject("DB");
+    const DBTodo = inject("DBTodo");
+    const DBUser = inject("DBUser");
     const $q = useQuasar();
     const token = $q.localStorage.getItem("token");
 
     const store = useStore();
 
     const tasks = ref([]);
+    const users = ref([]);
+
     onMounted(() => {
-      DB.todos
+      DBTodo.todos
         .find()
         .sort("created_at")
         .$.subscribe((todos) => {
@@ -57,6 +70,15 @@ export default defineComponent({
             return;
           }
           tasks.value = todos;
+        });
+      DBUser.users
+        .find()
+        .sort("created_at")
+        .$.subscribe((user) => {
+          if (!user) {
+            return;
+          }
+          users.value = user;
         });
       if (token && store.getters["auth/isSignedIn"] === null) {
         store.commit("auth/SET_TOKEN", token);
@@ -76,6 +98,7 @@ export default defineComponent({
 
     return {
       tasks,
+      users,
       clearAll,
       clearAllDone,
     };

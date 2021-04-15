@@ -2,14 +2,16 @@
   <q-layout view="hHh Lpr fFf">
     <q-header elevated>
       <q-toolbar>
-        <q-toolbar-title> Todo App </q-toolbar-title>
+        <q-toolbar-title
+          >Hasura, RxDB, Vue3, API composition, Apollo Client</q-toolbar-title
+        >
         <q-btn
-          v-if="token"
-          @click="logout"
+          v-if="this.$route.path === `/todo/${this.$route.params.userId}`"
           flat
-          icon-right="account_circle"
-          label="Se déconnecter"
+          icon-right="logout"
+          label="Users"
           class="absolute-right"
+          to="/user"
         />
       </q-toolbar>
     </q-header>
@@ -20,22 +22,9 @@
 </template>
 
 <script>
-import { defineComponent, computed } from "vue";
-import { useStore } from "vuex";
+import { defineComponent } from "vue";
 
 export default defineComponent({
   name: "MainLayout",
-
-  components: {},
-
-  setup() {
-    const store = useStore();
-    const token = computed(() => store.getters["auth/isSignedIn"]);
-
-    function logout() {
-      store.dispatch("auth/logoutUser");
-    }
-    return { token, logout };
-  },
 });
 </script>

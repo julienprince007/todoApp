@@ -1,28 +1,31 @@
 <template>
-  <q-form @submit="onSubmit" name="insertForm">
-    <div class="q-mt-md row justify-center">
-      <q-input outlined v-model="todoName" label="Task" />
-      <q-btn
-        outline
-        type="submit"
-        class="q-ml-xs"
-        style="color: goldenrod"
-        label="add todo"
-      />
-    </div>
-  </q-form>
+  <div class="row q-pa-md">
+    <q-form @submit="onSubmit" name="insertForm">
+      <div class="q-mt-md">
+        <q-input rounded v-model="todoName" label="New Task" />
+        <q-btn
+          outline
+          type="submit"
+          class="q-ml-xs q-mt-md"
+          style="color: goldenrod"
+          label="add todo"
+        />
+      </div>
+    </q-form>
+  </div>
 </template>
 
 <script>
 import { defineComponent, ref, inject } from "vue";
 import { v4 as uuidv4 } from "uuid";
+import { useRoute } from "vue-router";
 
 export default defineComponent({
   name: "newTodo",
 
   setup() {
     const todoName = ref("");
-    // Injection DB
+    const route = useRoute();
     const DBTodo = inject("DBTodo");
 
     const onSubmit = async () => {
@@ -31,6 +34,7 @@ export default defineComponent({
           id: uuidv4(),
           text: todoName.value,
           isCompleted: false,
+          user_id: route.params.userId,
           created_at: new Date().toISOString(),
           updated_at: new Date().toISOString(),
         };

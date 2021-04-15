@@ -1,19 +1,5 @@
 <template>
-  <div
-    v-if="tasks.length > 0"
-    class="q-pa-xl column justify-content"
-    id="q-app"
-    style="margin: auto; max-width: 700px"
-  >
-    <div class="q-mb-md row justify-center">
-      <q-btn
-        class="q-mr-xs"
-        color="red"
-        label="Delete All task"
-        @click="clearAll"
-      />
-      <q-btn color="orange" label="Delete task done" @click="clearAllDone" />
-    </div>
+  <div style="margin: auto; min-width: 600px">
     <div class="q-pa-md q-gutter-md">
       <q-list
         v-for="task in tasks"
@@ -22,48 +8,50 @@
         class="rounded-borders"
         style="width: 100%; margin: 5px"
       >
-        <Item :text="task.text" :todo="task" :isCompleted="task.isCompleted" />
-      </q-list>
-      <h2>List User</h2>
-      <q-list
-        v-for="user in users"
-        :key="user.id"
-        bordered
-        class="rounded-borders"
-        style="width: 100%; margin: 5px"
-      >
-        <Item :text="user.last_name" />
+        <TodoItem
+          :text="task.text"
+          :todo="task"
+          :isCompleted="task.isCompleted"
+        />
       </q-list>
     </div>
   </div>
 </template>
 
 <script>
-import { defineComponent, ref, inject, onMounted } from "vue";
+import { defineComponent, ref, inject, onMounted, watch, computed } from "vue";
 
-import Item from "./Item";
-import { useQuasar } from "quasar";
-import { useStore } from "vuex";
+import TodoItem from "./todoItem";
+import { useRoute } from "vue-router";
 
 export default defineComponent({
   name: "TodoList",
-  components: { Item },
+  components: { TodoItem },
 
   setup() {
     // Injection DB
     const DBTodo = inject("DBTodo");
-    const DBUser = inject("DBUser");
-    const $q = useQuasar();
-    const token = $q.localStorage.getItem("token");
-
-    const store = useStore();
+    const route = useRoute();
 
     const tasks = ref([]);
     const users = ref([]);
+    const id = computed(() => {
+      return Array.isArray(route.params.userId)
+        ? route.params.userId[0]
+        : route.params.userId;
+    });
+
+    watch(id, getTodo, { deep: false });
 
     onMounted(() => {
+      getTodo();
+    });
+
+    function getTodo() {
       DBTodo.todos
-        .find()
+        .find({
+          selector: { user_id: { $eq: route.params.userId } },
+        })
         .sort("created_at")
         .$.subscribe((todos) => {
           if (!todos) {
@@ -71,20 +59,7 @@ export default defineComponent({
           }
           tasks.value = todos;
         });
-      DBUser.users
-        .find()
-        .sort("created_at")
-        .$.subscribe((user) => {
-          if (!user) {
-            return;
-          }
-          users.value = user;
-        });
-      if (token && store.getters["auth/isSignedIn"] === null) {
-        store.commit("auth/SET_TOKEN", token);
-      }
-    });
-
+    }
     function clearAllDone() {
       if (tasks.value) {
         tasks.value.map((task) => {
@@ -100,6 +75,7 @@ export default defineComponent({
       tasks,
       users,
       clearAll,
+      getTodo,
       clearAllDone,
     };
   },

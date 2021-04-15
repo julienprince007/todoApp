@@ -1,6 +1,6 @@
 <template>
   <q-item>
-    <q-item-section>
+    <q-item-section @click="updateText(todo)" style="cursor: pointer">
       <q-item-label>
         <p :class="rowClass(isCompleted)" style="margin: 0px">
           {{ text }}
@@ -29,16 +29,6 @@
           round
           @click="toggleTodo(todo)"
           :icon="isCompleted ? 'history' : 'done'"
-        />
-        <q-btn
-          class="gt-xs"
-          size="12px"
-          flat
-          color="blue"
-          dense
-          round
-          @click="updateText(todo)"
-          icon="edit"
         />
       </div>
     </q-item-section>

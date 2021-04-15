@@ -1,19 +1,14 @@
 <template>
   <div class="container">
     <div>
-      <h4 style="text-align: center; color: #1876d2">
-        Hasura, RxDB, Vue3, API composition, Apollo Client
-      </h4>
-      <NewTodo />
-      <TodoList />
+      <User />
     </div>
   </div>
 </template>
 
 <script>
 import { defineComponent, onMounted } from "vue";
-import NewTodo from "components/Todo/New";
-import TodoList from "components/Todo/List";
+import User from "./User";
 import { useQuasar } from "quasar";
 import * as todoReplication from "poctodoplugin/src/replication";
 import * as UserReplication from "plugin-user/src/replication";
@@ -21,8 +16,7 @@ import * as UserReplication from "plugin-user/src/replication";
 export default defineComponent({
   name: "PageIndex",
   components: {
-    NewTodo,
-    TodoList,
+    User,
   },
 
   setup() {
@@ -33,8 +27,8 @@ export default defineComponent({
     const urlsync = process.env.SYNCURL;
 
     onMounted(() => {
-      todoReplication.initReplication(token, secret, urlweb, urlsync);
-      UserReplication.initReplication(token, secret, urlweb, urlsync);
+      todoReplication.initReplication(secret, urlweb, urlsync);
+      UserReplication.initReplication(secret, urlweb, urlsync);
     });
   },
 });

@@ -15,6 +15,9 @@
       </q-avatar>
     </q-item-section>
     <q-item-section>{{ user.name }}</q-item-section>
+    <q-item-section side>
+      <q-icon name="list" color="bg-amber-3" />
+    </q-item-section>
   </q-item>
 </template>
 

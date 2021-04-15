@@ -1,5 +1,5 @@
 <template>
-  <div style="margin: auto; min-width: 600px">
+  <div style="margin: auto; min-width: 500px">
     <div class="q-pa-md q-gutter-md">
       <q-list
         v-for="task in tasks"

@@ -2,9 +2,7 @@
   <q-layout view="hHh Lpr fFf">
     <q-header elevated>
       <q-toolbar>
-        <q-toolbar-title
-          >Hasura, RxDB, Vue3, API composition, Apollo Client</q-toolbar-title
-        >
+        <q-toolbar-title>Hasura, RxDB, Vue3, Composition API</q-toolbar-title>
         <q-btn
           v-if="this.$route.path === `/todo/${this.$route.params.userId}`"
           flat

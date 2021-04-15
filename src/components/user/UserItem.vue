@@ -9,6 +9,11 @@
     "
     active-class="bg-amber-3 text-blue-grey"
   >
+    <q-item-section avatar>
+      <q-avatar color="blue-grey" text-color="white">
+        {{ user.name[0] }}
+      </q-avatar>
+    </q-item-section>
     <q-item-section>{{ user.name }}</q-item-section>
   </q-item>
 </template>

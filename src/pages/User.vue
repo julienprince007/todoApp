@@ -20,7 +20,13 @@
     </div>
     <div class="q-mt-lg row justify-center">
       <div class="q-pa-md" style="min-width: 450px">
-        <q-list bordered separator v-for="user in users" :key="user.id">
+        <q-list
+          bordered
+          separator
+          v-for="user in users"
+          :key="user.id"
+          class="rounded-borders q-mb-xs"
+        >
           <Item :user="user" :selectUser="selectUser" />
         </q-list>
       </div>
@@ -42,7 +48,7 @@ export default defineComponent({
     const { DBUser, users } = getUser();
     const { selectUser } = redirect();
 
-    const name = ref();
+    const name = ref("");
 
     const onSubmit = async () => {
       if (name.value !== "") {

@@ -29,7 +29,7 @@ export default defineComponent({
     const DBTodo = inject("DBTodo");
 
     const onSubmit = async () => {
-      if (todoName.value != "") {
+      if (todoName.value !== "") {
         const obj = {
           id: uuidv4(),
           text: todoName.value,

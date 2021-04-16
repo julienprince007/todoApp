@@ -1,6 +1,6 @@
 <template>
   <div style="margin: auto; min-width: 500px">
-    <div class="q-pa-md q-gutter-md">
+    <div class="q-pa-md">
       <q-list
         v-for="task in tasks"
         :key="task.id"
@@ -34,7 +34,6 @@ export default defineComponent({
     const route = useRoute();
 
     const tasks = ref([]);
-    const users = ref([]);
     const id = computed(() => {
       return Array.isArray(route.params.userId)
         ? route.params.userId[0]
@@ -60,6 +59,7 @@ export default defineComponent({
           tasks.value = todos;
         });
     }
+
     function clearAllDone() {
       if (tasks.value) {
         tasks.value.map((task) => {
@@ -67,13 +67,13 @@ export default defineComponent({
         });
       }
     }
+
     function clearAll() {
       if (tasks.value) tasks.value.map((task) => task.remove());
     }
 
     return {
       tasks,
-      users,
       clearAll,
       getTodo,
       clearAllDone,

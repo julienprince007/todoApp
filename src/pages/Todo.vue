@@ -2,8 +2,14 @@
   <div class="row justify-around">
     <div class="q-pa-md">
       <h4 style="color: #1876d2; text-align: center">Users Lists</h4>
-      <div style="min-width: 350px">
-        <q-list bordered v-for="user in users" :key="user.id">
+      <div class="q-pa-md" style="min-width: 350px">
+        <q-list
+          class="rounded-borders q-mb-xs"
+          separator
+          bordered
+          v-for="user in users"
+          :key="user.id"
+        >
           <UserItem :user="user" :selectUser="selectUser" />
         </q-list>
       </div>

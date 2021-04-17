@@ -14,6 +14,19 @@
           :isCompleted="task.isCompleted"
         />
       </q-list>
+      <q-list
+        v-if="!tasks.length"
+        bordered
+        style="min-width: 500px, margin: 5px"
+        class="rounded-borders"
+      >
+        <q-item>
+          <q-item-section>No tasks for at moment</q-item-section>
+          <q-item-section avatar>
+            <q-avatar color="teal" text-color="white" icon="check" />
+          </q-item-section>
+        </q-item>
+      </q-list>
     </div>
   </div>
 </template>

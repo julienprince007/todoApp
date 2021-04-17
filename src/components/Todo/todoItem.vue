@@ -37,7 +37,7 @@
 
 <script>
 import { defineComponent } from "vue";
-import todoLogic from "../../todoComposition/todoLogic";
+import todoMethods from "../../todoComposition/todoMethods";
 
 export default defineComponent({
   name: "Item",
@@ -48,7 +48,7 @@ export default defineComponent({
   },
 
   setup() {
-    const { toggleTodo, removeTodo, updateTodo, rowClass } = todoLogic();
+    const { toggleTodo, removeTodo, updateTodo, rowClass } = todoMethods();
 
     return {
       rowClass,

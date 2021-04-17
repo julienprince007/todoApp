@@ -1,7 +1,7 @@
 <template>
   <div class="row justify-around">
     <div class="q-pa-md">
-      <h4 style="color: #1876d2; text-align: center">Users Lists</h4>
+      <h4 style="color: #1876d2; text-align: center">Users</h4>
       <div class="q-pa-md" style="min-width: 350px">
         <q-list
           class="rounded-borders q-mb-xs"

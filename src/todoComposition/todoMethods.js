@@ -1,7 +1,7 @@
 import { inject } from "vue";
 import { useQuasar } from "quasar";
 
-export default function todoLogic() {
+export default function todoMethods() {
   const db = inject("DBTodo");
   const $q = useQuasar();
 

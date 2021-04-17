@@ -34,13 +34,13 @@ export default defineComponent({
     const route = useRoute();
 
     const tasks = ref([]);
-    const id = computed(() => {
+    const userId = computed(() => {
       return Array.isArray(route.params.userId)
         ? route.params.userId[0]
         : route.params.userId;
     });
 
-    watch(id, getTodo, { deep: false });
+    watch(userId, getTodo);
 
     onMounted(() => {
       getTodo();
@@ -60,23 +60,9 @@ export default defineComponent({
         });
     }
 
-    function clearAllDone() {
-      if (tasks.value) {
-        tasks.value.map((task) => {
-          if (task.isCompleted) task.remove();
-        });
-      }
-    }
-
-    function clearAll() {
-      if (tasks.value) tasks.value.map((task) => task.remove());
-    }
-
     return {
       tasks,
-      clearAll,
       getTodo,
-      clearAllDone,
     };
   },
 });

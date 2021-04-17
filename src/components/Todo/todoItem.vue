@@ -1,6 +1,6 @@
 <template>
   <q-item>
-    <q-item-section @click="updateText(todo)" style="cursor: pointer">
+    <q-item-section @click="updateTodo(todo)" style="cursor: pointer">
       <q-item-label>
         <p :class="rowClass(isCompleted)" style="margin: 0px">
           {{ text }}
@@ -37,7 +37,7 @@
 
 <script>
 import { defineComponent } from "vue";
-import { useQuasar } from "quasar";
+import todoLogic from "../../todoComposition/todoLogic";
 
 export default defineComponent({
   name: "Item",
@@ -48,48 +48,13 @@ export default defineComponent({
   },
 
   setup() {
-    const $q = useQuasar();
+    const { toggleTodo, removeTodo, updateTodo, rowClass } = todoLogic();
 
-    function rowClass(isCompleted) {
-      return { textThrough: isCompleted };
-    }
-
-    async function removeTodo(todo) {
-      if (todo.isCompleted) return await todo.remove();
-    }
-
-    async function toggleTodo(todo) {
-      await todo.update({
-        $set: {
-          isCompleted: !todo.isCompleted,
-        },
-      });
-    }
-
-    function updateText(todo) {
-      $q.dialog({
-        title: "Modification",
-        dark: true,
-        prompt: {
-          model: todo.text,
-        },
-        cancel: true,
-        persistent: true,
-      }).onOk((data) => {
-        if (data) {
-          todo.update({
-            $set: {
-              text: data,
-            },
-          });
-        }
-      });
-    }
     return {
       rowClass,
-      removeTodo,
       toggleTodo,
-      updateText,
+      removeTodo,
+      updateTodo,
     };
   },
 });

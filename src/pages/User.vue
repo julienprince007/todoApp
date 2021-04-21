@@ -39,12 +39,13 @@ import { defineComponent, ref } from "vue";
 import Item from "../components/user/UserItem";
 import getUser from "../todoComposition/getUsers";
 import redirect from "../todoComposition/redirect";
+import { v4 as uuidv4 } from "uuid";
 
 export default defineComponent({
   name: "User",
   components: { Item },
   setup() {
-    const { DBUser, users } = getUser();
+    const { DB, users } = getUser();
     const { selectUser } = redirect();
 
     const name = ref("");
@@ -57,7 +58,7 @@ export default defineComponent({
           created_at: new Date().toISOString(),
           updated_at: new Date().toISOString(),
         };
-        await DBUser.users.insert(obj);
+        await DB.users.insert(obj);
         name.value = "";
       }
     };

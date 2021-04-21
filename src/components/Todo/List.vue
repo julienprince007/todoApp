@@ -43,7 +43,7 @@ export default defineComponent({
 
   setup() {
     // Injection DB
-    const DBTodo = inject("DBTodo");
+    const DB = inject("DB");
     const route = useRoute();
 
     const tasks = ref([]);
@@ -60,7 +60,7 @@ export default defineComponent({
     });
 
     function getTodo() {
-      DBTodo.todos
+      DB.todos
         .find({
           selector: { user_id: { $eq: route.params.userId } },
         })

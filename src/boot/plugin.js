@@ -1,7 +1,6 @@
 import * as todoPlugin from "@julienprince007/todoplugin";
-import * as userPlugin from "@julienprince007/user-plugin";
-import * as todoReplication from "@julienprince007/todoplugin/src/replication";
-import * as UserReplication from "@julienprince007/user-plugin/src/replication";
+import * as todoReplication from "@julienprince007/todoplugin/src/replication/todoReplication";
+import * as userReplication from "@julienprince007/todoplugin/src/replication/userReplication";
 
 export default async ({ app }) => {
   // constant for replication
@@ -9,12 +8,10 @@ export default async ({ app }) => {
   const urlweb = process.env.URLWEBSOCKET;
   const urlsync = process.env.SYNCURL;
 
-  const dbTodo = await todoPlugin.createDb();
-  const dbUser = await userPlugin.createDb();
+  const db = await todoPlugin.createDb();
 
-  app.provide("DBTodo", dbTodo);
-  app.provide("DBUser", dbUser);
+  app.provide("DB", db);
 
-  todoReplication.initReplication(secret, urlweb, urlsync);
-  UserReplication.initReplication(secret, urlweb, urlsync);
+  await todoReplication.initTodoReplication(secret, urlweb, urlsync);
+  await userReplication.initUserReplication(secret, urlweb, urlsync);
 };

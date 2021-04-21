@@ -1,10 +1,10 @@
 import { ref, inject, onMounted } from "vue";
 
 export default function getUsers() {
-  const DBUser = inject("DBUser");
+  const DB = inject("DB");
   const users = ref([]);
   onMounted(() => {
-    DBUser.users
+    DB.users
       .find()
       .sort("created_at")
       .$.subscribe((user) => {
@@ -15,5 +15,5 @@ export default function getUsers() {
       });
   });
 
-  return { DBUser, users };
+  return { DB, users };
 }

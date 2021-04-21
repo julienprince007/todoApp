@@ -26,7 +26,7 @@ export default defineComponent({
   setup() {
     const todoName = ref("");
     const route = useRoute();
-    const DBTodo = inject("DBTodo");
+    const DB = inject("DB");
 
     const onSubmit = async () => {
       if (todoName.value !== "") {
@@ -38,7 +38,7 @@ export default defineComponent({
           created_at: new Date().toISOString(),
           updated_at: new Date().toISOString(),
         };
-        await DBTodo.todos.insert(obj);
+        await DB.todos.insert(obj);
         todoName.value = "";
       }
     };

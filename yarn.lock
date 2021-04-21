@@ -942,19 +942,10 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
-"@julienprince007/todoplugin@1.0.0":
-  version "1.0.0"
-  resolved "https://npm.pkg.github.com/download/@julienprince007/todoplugin/1.0.0/f283d64cdafd044d97a7292d2746a44ca560e676f5c8ec4cc3de9cf824dad72f#9c696683f89ba14dc6e00feb652f7a7c91bc8753"
-  integrity sha512-WxdfeEDu8XVmaXbxBvBNzPJHLfWko8i/PWtkqhMSMmUIUYwY3Q7hv+ba1TNVJW+9MP9HLPSISEw7CPmNXWkxpA==
-  dependencies:
-    rxdb "^9.15.0"
-    rxjs "^6.6.7"
-    subscriptions-transport-ws "^0.9.18"
-
-"@julienprince007/user-plugin@1.0.0":
-  version "1.0.0"
-  resolved "https://npm.pkg.github.com/download/@julienprince007/user-plugin/1.0.0/8f7149d2952b11be1aa431e43f008c5185d4ba39bc72107bda2cd79fcfce0ea1#9d239412136cb3b6f5b79dcd4cfa9a1f63798156"
-  integrity sha512-m85WfuOOw1GTbptfiqunLyp1QKNXowy8ftwRbaQsvxY/RK6u4qhPWqq1MQ5LXLYBQMrf0xyNQ1RYy5xvls9P/Q==
+"@julienprince007/todoplugin@1.0.1":
+  version "1.0.1"
+  resolved "https://npm.pkg.github.com/download/@julienprince007/todoplugin/1.0.1/11f77dfb3463a7ec1e9e66c20e45fe1a4acf184a71cb2fe88a0877265256e0c8#fa8f81b06fd2a528aa39e363d881272d690dd225"
+  integrity sha512-fYZbDBwDkRK0gCN6SaXX2qjfeY+XtQLhOFz7M7Dh6oTG7xewUf5K556YaP3kwSbtXcZQbJzXm+gwY5dDZsP7nQ==
   dependencies:
     rxdb "^9.15.0"
     rxjs "^6.6.7"

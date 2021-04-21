@@ -2,7 +2,7 @@ import { inject } from "vue";
 import { useQuasar } from "quasar";
 
 export default function todoMethods() {
-  const db = inject("DBTodo");
+  const db = inject("DB");
   const $q = useQuasar();
 
   async function findOneTodo(id) {

@@ -942,6 +942,24 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
+"@julienprince007/todoplugin@1.0.0":
+  version "1.0.0"
+  resolved "https://npm.pkg.github.com/download/@julienprince007/todoplugin/1.0.0/f283d64cdafd044d97a7292d2746a44ca560e676f5c8ec4cc3de9cf824dad72f#9c696683f89ba14dc6e00feb652f7a7c91bc8753"
+  integrity sha512-WxdfeEDu8XVmaXbxBvBNzPJHLfWko8i/PWtkqhMSMmUIUYwY3Q7hv+ba1TNVJW+9MP9HLPSISEw7CPmNXWkxpA==
+  dependencies:
+    rxdb "^9.15.0"
+    rxjs "^6.6.7"
+    subscriptions-transport-ws "^0.9.18"
+
+"@julienprince007/user-plugin@1.0.0":
+  version "1.0.0"
+  resolved "https://npm.pkg.github.com/download/@julienprince007/user-plugin/1.0.0/8f7149d2952b11be1aa431e43f008c5185d4ba39bc72107bda2cd79fcfce0ea1#9d239412136cb3b6f5b79dcd4cfa9a1f63798156"
+  integrity sha512-m85WfuOOw1GTbptfiqunLyp1QKNXowy8ftwRbaQsvxY/RK6u4qhPWqq1MQ5LXLYBQMrf0xyNQ1RYy5xvls9P/Q==
+  dependencies:
+    rxdb "^9.15.0"
+    rxjs "^6.6.7"
+    subscriptions-transport-ws "^0.9.18"
+
 "@nodelib/fs.scandir@2.1.4":
   version "2.1.4"
   resolved "https://registry.yarnpkg.com/@nodelib/fs.scandir/-/fs.scandir-2.1.4.tgz#d4b3549a5db5de2683e0c1071ab4f140904bbf69"
@@ -8262,10 +8280,17 @@ rxdb@^9.15.0:
     util "0.12.3"
     z-schema "5.0.0"
 
-rxjs@^6.6.0, rxjs@^6.6.6:
+rxjs@^6.6.0:
   version "6.6.6"
   resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-6.6.6.tgz#14d8417aa5a07c5e633995b525e1e3c0dec03b70"
   integrity sha512-/oTwee4N4iWzAMAL9xdGKjkEHmIwupR3oXbQjCKywF1BeFohswF3vZdogbmEF6pZkOsXTzWkrZszrWpQTByYVg==
+  dependencies:
+    tslib "^1.9.0"
+
+rxjs@^6.6.7:
+  version "6.6.7"
+  resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-6.6.7.tgz#90ac018acabf491bf65044235d5863c4dab804c9"
+  integrity sha512-hTdwr+7yYNIT5n4AMYp85KA6yw2Va0FLa3Rguvbpa4W3I5xynaBZo41cM3XM+4Q6fRMj3sBYIR1VAmZMXYJvRQ==
   dependencies:
     tslib "^1.9.0"
 

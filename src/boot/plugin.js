@@ -1,7 +1,7 @@
-import * as todoPlugin from "poctodoplugin";
-import * as userPlugin from "plugin-user";
-import * as todoReplication from "poctodoplugin/src/replication";
-import * as UserReplication from "plugin-user/src/replication";
+import * as todoPlugin from "@julienprince007/todoplugin";
+import * as userPlugin from "@julienprince007/user-plugin";
+import * as todoReplication from "@julienprince007/todoplugin/src/replication";
+import * as UserReplication from "@julienprince007/user-plugin/src/replication";
 
 export default async ({ app }) => {
   // constant for replication

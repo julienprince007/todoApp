@@ -37,7 +37,6 @@
 <script>
 import { defineComponent, ref } from "vue";
 import Item from "../components/user/UserItem";
-import { v4 as uuidv4 } from "uuid";
 import getUser from "../todoComposition/getUsers";
 import redirect from "../todoComposition/redirect";
 

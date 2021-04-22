@@ -1,6 +1,6 @@
 import * as todoPlugin from "@julienprince007/todoplugin";
-import * as todoReplication from "@julienprince007/todoplugin/src/replication/todoReplication";
-import * as userReplication from "@julienprince007/todoplugin/src/replication/userReplication";
+import * as todoReplication from "@julienprince007/todoplugin/src/replications/todoReplication";
+import * as userReplication from "@julienprince007/todoplugin/src/replications/userReplication";
 
 export default async ({ app }) => {
   // constant for replication

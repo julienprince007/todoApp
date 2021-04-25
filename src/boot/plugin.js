@@ -9,9 +9,9 @@ export default async ({ app }) => {
   const urlsync = process.env.SYNCURL;
 
   const db = await todoPlugin.createDb();
+  const rp = await todoReplication.initTodoReplication(secret, urlweb, urlsync);
+  await userReplication.initUserReplication(secret, urlweb, urlsync);
 
   app.provide("DB", db);
-
-  await todoReplication.initTodoReplication(secret, urlweb, urlsync);
-  await userReplication.initUserReplication(secret, urlweb, urlsync);
+  app.provide("RP", rp);
 };

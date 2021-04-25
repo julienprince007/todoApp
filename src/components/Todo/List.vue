@@ -1,5 +1,6 @@
 <template>
   <div style="margin: auto; min-width: 500px">
+    {{ onlines }}
     <div class="q-pa-md">
       <q-list
         v-for="task in tasks"
@@ -32,7 +33,15 @@
 </template>
 
 <script>
-import { defineComponent, ref, inject, onMounted, watch, computed } from "vue";
+import {
+  defineComponent,
+  ref,
+  inject,
+  onMounted,
+  watch,
+  onBeforeUnmount,
+  computed,
+} from "vue";
 
 import TodoItem from "./todoItem";
 import { useRoute } from "vue-router";
@@ -44,6 +53,7 @@ export default defineComponent({
   setup() {
     // Injection DB
     const DB = inject("DB");
+    const RP = inject("RP");
     const route = useRoute();
 
     const tasks = ref([]);
@@ -53,11 +63,27 @@ export default defineComponent({
         : route.params.userId;
     });
 
+    const onlines = ref(navigator.onLine);
+
     watch(userId, getTodo);
+    // watch(onlines, stopReplication);
 
     onMounted(() => {
       getTodo();
+      stopReplication();
+      window.addEventListener("online", updateStatus);
+      window.addEventListener("offline", updateStatus);
     });
+
+    onBeforeUnmount(() => {
+      window.removeEventListener("online", updateStatus);
+      window.removeEventListener("offline", updateStatus);
+    });
+
+    function updateStatus(e) {
+      const { type } = e;
+      onlines.value = type === "online";
+    }
 
     function getTodo() {
       DB.todos
@@ -73,9 +99,17 @@ export default defineComponent({
         });
     }
 
+    async function stopReplication() {
+      const isReplicated = await RP.awaitInitialReplication();
+      if(isReplicated) {
+        RP.cancel()
+      }
+    }
+
     return {
       tasks,
       getTodo,
+      onlines,
     };
   },
 });

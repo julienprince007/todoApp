@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import { defineComponent, ref, inject, onMounted, watch, computed } from "vue";
+import { defineComponent, ref, inject, onMounted, computed } from "vue";
 
 import TodoItem from "./todoItem";
 import { useRoute } from "vue-router";
@@ -43,24 +43,14 @@ export default defineComponent({
 
   setup() {
     // Injection DB
-    const DB = inject("DB");
+    const { getDB } = inject("DB");
     const route = useRoute();
-
     const tasks = ref([]);
-    const userId = computed(() => {
-      return Array.isArray(route.params.userId)
-        ? route.params.userId[0]
-        : route.params.userId;
-    });
-
-    watch(userId, getTodo);
+    //surveil instance db
+    const db = computed(() => getDB());
 
     onMounted(() => {
-      getTodo();
-    });
-
-    function getTodo() {
-      DB.todos
+      db.value.todos
         .find({
           selector: { user_id: { $eq: route.params.userId } },
         })
@@ -71,11 +61,11 @@ export default defineComponent({
           }
           tasks.value = todos;
         });
-    }
+    });
 
     return {
       tasks,
-      getTodo,
+      db,
     };
   },
 });

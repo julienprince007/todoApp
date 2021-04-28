@@ -1,3 +1,10 @@
+# User valable pour le Test
+
+Pour le test il y a deux User:
+
+- username: prince, mdp: prince
+- username: test, mdp: test
+
 # Quasar App (todo)
 
 A Quasar Framework app

@@ -7,7 +7,7 @@
           v-if="this.$route.path === `/todo/${this.$route.params.userId}`"
           flat
           icon-right="logout"
-          label="Users"
+          label="Logout"
           class="absolute-right"
           to="/user"
         />

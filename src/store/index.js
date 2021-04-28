@@ -1,6 +1,6 @@
 import { createStore } from "vuex";
 
-import auth from "./auth/store-auth.js";
+import rxdb from "./auth/store-rxdb.js";
 
 /*
  * If not building with SSR mode, you can
@@ -14,7 +14,7 @@ import auth from "./auth/store-auth.js";
 export default function (/* { ssrContext } */) {
   const Store = createStore({
     modules: {
-      auth,
+      rxdb,
     },
 
     // enable strict mode (adds overhead!)

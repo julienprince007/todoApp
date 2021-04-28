@@ -22,13 +22,13 @@ import { useRoute } from "vue-router";
 
 export default defineComponent({
   name: "newTodo",
-
   setup() {
     const todoName = ref("");
     const route = useRoute();
-    const DB = inject("DB");
+    const { getDB } = inject("DB");
 
     const onSubmit = async () => {
+      const db = getDB();
       if (todoName.value !== "") {
         const obj = {
           id: uuidv4(),
@@ -38,7 +38,7 @@ export default defineComponent({
           created_at: new Date().toISOString(),
           updated_at: new Date().toISOString(),
         };
-        await DB.todos.insert(obj);
+        await db.todos.insert(obj);
         todoName.value = "";
       }
     };

@@ -2,72 +2,71 @@
   <div>
     <div class="q-mt-lg row justify-center">
       <div>
-        <h4 style="color: #1876d2; text-align: center">Users Lists</h4>
+        <h4 style="color: #1876d2; text-align: center">Login</h4>
         <q-form class="q-gutter-md" style="width: 375px" @submit="onSubmit">
-          <div class="q-mt-md row justify-center">
-            <q-input outlined v-model="name" label="New User" />
-            <q-btn
-              outline
-              type="submit"
-              class="q-ml-md"
-              size="sm"
-              style="color: #1876d2"
-              label="add user"
+          <div class="q-mt-md">
+            <q-input outlined v-model="name" label="User Name" />
+            <q-input
+              class="q-mt-md"
+              outlined
+              v-model="password"
+              label="Password"
             />
+            <div class="row justify-center">
+              <q-btn
+                :loading="loading"
+                outline
+                type="submit"
+                class="q-mt-md row justify-center"
+                style="color: #1876d2"
+                label="login"
+              >
+              </q-btn>
+            </div>
           </div>
         </q-form>
-      </div>
-    </div>
-    <div class="q-mt-lg row justify-center">
-      <div class="q-pa-md" style="min-width: 450px">
-        <q-list
-          bordered
-          separator
-          v-for="user in users"
-          :key="user.id"
-          class="rounded-borders q-mb-xs"
-        >
-          <Item :user="user" :selectUser="selectUser" />
-        </q-list>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { defineComponent, ref } from "vue";
-import Item from "../components/user/UserItem";
-import getUser from "../todoComposition/getUsers";
-import redirect from "../todoComposition/redirect";
-import { v4 as uuidv4 } from "uuid";
+import { defineComponent, ref, inject } from "vue";
+import { useRouter } from "vue-router";
+
+import usersData from "../users.json";
+import schema from "../rxdb/schema/schemaRxdb";
 
 export default defineComponent({
   name: "User",
-  components: { Item },
   setup() {
-    const { DB, users } = getUser();
-    const { selectUser } = redirect();
+    const router = useRouter();
+    const loading = ref(false);
 
     const name = ref("");
+    const password = ref("");
+    const { createDb } = inject("DB");
 
     const onSubmit = async () => {
-      if (name.value !== "") {
-        const obj = {
-          id: uuidv4(),
-          name: name.value,
-          created_at: new Date().toISOString(),
-          updated_at: new Date().toISOString(),
-        };
-        await DB.users.insert(obj);
-        name.value = "";
+      const user = await usersData.find((user) => user.name == name.value);
+      if (user) {
+        if (user.password === password.value) {
+          await createDb(user.name, schema);
+          loading.value = true;
+          setTimeout(() => {
+            router.push(`/todo/${user.id}`);
+          }, 1000);
+        }
+      } else {
+        console.log("user not found");
       }
     };
 
     return {
       name,
+      password,
       onSubmit,
-      users,
-      selectUser,
+      loading,
     };
   },
 });

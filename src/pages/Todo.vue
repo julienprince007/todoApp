@@ -12,7 +12,8 @@
 import { defineComponent, onMounted, inject } from "vue";
 import NewTodo from "components/Todo/New";
 import TodoList from "components/Todo/List";
-import query from "../rxdb/subscription/subTodoQuery";
+import subTodoQuery from "../rxdb/subscription/subTodoQuery";
+import subUserQuery from "../rxdb/subscription/subUserQuery";
 import {
   todoPushQueryBuilder,
   todoPullQueryBuilder,
@@ -32,13 +33,15 @@ export default defineComponent({
       const secret = process.env.SECRET;
       const urlweb = process.env.URLWEBSOCKET;
       const urlsync = process.env.SYNCURL;
+      const collection = "todos";
       await initTodoReplication(
         secret,
         urlweb,
         urlsync,
-        query,
+        subTodoQuery,
         todoPushQueryBuilder,
-        todoPullQueryBuilder
+        todoPullQueryBuilder,
+        collection
       );
     });
     return {};

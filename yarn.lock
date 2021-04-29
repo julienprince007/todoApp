@@ -949,10 +949,10 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
-"@julienprince007/todoplugin@^1.0.2":
-  version "1.0.2"
-  resolved "https://npm.pkg.github.com/download/@julienprince007/todoplugin/1.0.2/a1ee67f92635c3ae7d0bd216d7f90ea39bccb033a70397aa5b580e50a3b0c73f#37bf5b53f1499bad46605961075fb65b8886103d"
-  integrity sha512-556YhB0ftL4Ar0HDqSn94BD5mcTnMjvKrdvZsXlR2olHoYMCCsnCfJT0FCFYvCCKKrVhrZaKwmxGtN30zbN53w==
+"@julienprince007/todoplugin@^2.0.0":
+  version "2.0.0"
+  resolved "https://npm.pkg.github.com/download/@julienprince007/todoplugin/2.0.0/c0a53ce43c8cfd23b076c8c8ade102a795ae710129e95c079df354d410840cf0#a282fabc49e7c98af7a6d01d0a512c18afb3024c"
+  integrity sha512-SiP3sfQpfL13Sguyty4yJWMTt1nBPxsyDlYwwXis4waZVJFkU+9b7g9wcCtLWIuOYQYIteqfDWtmvTKCUdXHbw==
   dependencies:
     rxdb "^9.15.0"
     rxjs "^6.6.7"

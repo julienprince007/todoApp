@@ -2,13 +2,13 @@ import { inject } from "vue";
 import { useQuasar } from "quasar";
 
 export default function todoMethods() {
-  const { getDB } = inject("DB");
-  const db = getDB();
-
+  const { getCollection } = inject("DB");
   const $q = useQuasar();
 
+  const collection = getCollection("todos");
+
   async function findOneTodo(id) {
-    return await db.todos.find({
+    return await collection.find({
       selector: { id: { $eq: id } },
     });
   }

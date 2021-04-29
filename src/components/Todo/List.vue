@@ -43,14 +43,15 @@ export default defineComponent({
 
   setup() {
     // Injection DB
-    const { getDB } = inject("DB");
+    const { getCollection } = inject("DB");
+
     const route = useRoute();
     const tasks = ref([]);
-    //surveil instance db
-    const db = computed(() => getDB());
+    //surveil instance collection
+    const collection = computed(() => getCollection("todos"));
 
     onMounted(() => {
-      db.value.todos
+      collection.value
         .find({
           selector: { user_id: { $eq: route.params.userId } },
         })
@@ -65,7 +66,7 @@ export default defineComponent({
 
     return {
       tasks,
-      db,
+      collection,
     };
   },
 });

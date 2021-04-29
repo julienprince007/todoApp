@@ -13,7 +13,6 @@ import { defineComponent, onMounted, inject } from "vue";
 import NewTodo from "components/Todo/New";
 import TodoList from "components/Todo/List";
 import subTodoQuery from "../rxdb/subscription/subTodoQuery";
-import subUserQuery from "../rxdb/subscription/subUserQuery";
 import {
   todoPushQueryBuilder,
   todoPullQueryBuilder,

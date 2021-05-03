@@ -25,10 +25,11 @@ export default defineComponent({
   setup() {
     const todoName = ref("");
     const route = useRoute();
-    const { getDB } = inject("DB");
+    const { getCollection } = inject("DB");
 
     const onSubmit = async () => {
-      const db = getDB();
+      const collection = getCollection("todos");
+
       if (todoName.value !== "") {
         const obj = {
           id: uuidv4(),
@@ -38,7 +39,7 @@ export default defineComponent({
           created_at: new Date().toISOString(),
           updated_at: new Date().toISOString(),
         };
-        await db.todos.insert(obj);
+        await collection.insert(obj);
         todoName.value = "";
       }
     };

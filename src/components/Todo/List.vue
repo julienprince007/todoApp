@@ -32,36 +32,21 @@
 </template>
 
 <script>
-import { defineComponent, ref, inject, onMounted, computed } from "vue";
+import { defineComponent, onMounted, computed } from "vue";
 
 import TodoItem from "./todoItem";
-import { useRoute } from "vue-router";
+import todoMethods from "./todoMethods";
 
 export default defineComponent({
   name: "TodoList",
   components: { TodoItem },
 
   setup() {
-    // Injection DB
-    const { getCollection } = inject("DB");
-
-    const route = useRoute();
-    const tasks = ref([]);
+    const { findTask, tasks } = todoMethods();
     //surveil instance collection
     const collection = computed(() => getCollection("todos"));
-
     onMounted(() => {
-      collection.value
-        .find({
-          selector: { user_id: { $eq: route.params.userId } },
-        })
-        .sort("created_at")
-        .$.subscribe((todos) => {
-          if (!todos) {
-            return;
-          }
-          tasks.value = todos;
-        });
+      findTask();
     });
 
     return {

@@ -9,14 +9,11 @@
 </template>
 
 <script>
-import { defineComponent, onMounted, inject } from "vue";
+import { defineComponent, onMounted, inject, computed } from "vue";
+import { useStore } from "vuex";
+
 import NewTodo from "components/Todo/New";
 import TodoList from "components/Todo/List";
-import subTodoQuery from "../rxdb/subscription/subTodoQuery";
-import {
-  todoPushQueryBuilder,
-  todoPullQueryBuilder,
-} from "../rxdb/queryBuilder/todoQueryBuilder ";
 
 export default defineComponent({
   name: "PageIndex",
@@ -26,23 +23,20 @@ export default defineComponent({
   },
 
   setup() {
-    const { initTodoReplication } = inject("DB");
+    const { initReplication } = inject("DB");
+    const store = useStore();
 
+    const collectionName = computed(() => store.getters["rxdb/getInfos"]);
+    const arrayOfName = Object.values(collectionName.value.collectionName);
+    const todoName = arrayOfName.find((name) => name === "todos");
     onMounted(async () => {
-      const secret = process.env.SECRET;
-      const urlweb = process.env.URLWEBSOCKET;
-      const urlsync = process.env.SYNCURL;
-      const collection = "todos";
-      await initTodoReplication(
-        secret,
-        urlweb,
-        urlsync,
-        subTodoQuery,
-        todoPushQueryBuilder,
-        todoPullQueryBuilder,
-        collection
-      );
+      try {
+        await initReplication(todoName);
+      } catch (error) {
+        console.log("error: ", error);
+      }
     });
+
     return {};
   },
 });

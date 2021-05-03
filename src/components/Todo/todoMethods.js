@@ -1,9 +1,13 @@
-import { inject } from "vue";
+import { inject, ref } from "vue";
 import { useQuasar } from "quasar";
+import { useRoute } from "vue-router";
 
 export default function todoMethods() {
   const { getCollection } = inject("DB");
   const $q = useQuasar();
+  const { getDB } = inject("DB");
+  const route = useRoute();
+  const tasks = ref([]);
 
   const collection = getCollection("todos");
 
@@ -53,5 +57,41 @@ export default function todoMethods() {
     return { textThrough: isCompleted };
   }
 
-  return { toggleTodo, findOneTodo, removeTodo, updateTodo, rowClass };
+  function findTask() {
+    if (collection === null) {
+      getDB.todos
+        .find({
+          selector: { user_id: { $eq: route.params.userId } },
+        })
+        .sort("created_at")
+        .$.subscribe((todos) => {
+          if (!todos) {
+            return;
+          }
+          tasks.value = todos;
+        });
+    } else {
+      collection
+        .find({
+          selector: { user_id: { $eq: route.params.userId } },
+        })
+        .sort("created_at")
+        .$.subscribe((todos) => {
+          if (!todos) {
+            return;
+          }
+          tasks.value = todos;
+        });
+    }
+  }
+
+  return {
+    toggleTodo,
+    findOneTodo,
+    removeTodo,
+    updateTodo,
+    rowClass,
+    findTask,
+    tasks,
+  };
 }

@@ -1,6 +1,6 @@
 import { createStore } from "vuex";
 
-import rxdb from "./auth/store-rxdb.js";
+import rxdb from "./rxdb/store-rxdb.js";
 
 /*
  * If not building with SSR mode, you can

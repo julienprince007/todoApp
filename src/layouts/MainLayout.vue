@@ -6,10 +6,11 @@
         <q-btn
           v-if="this.$route.path === `/todo/${this.$route.params.userId}`"
           flat
+          @click="logout"
           icon-right="logout"
           label="Logout"
           class="absolute-right"
-          to="/user"
+          to="/login"
         />
       </q-toolbar>
     </q-header>
@@ -20,9 +21,25 @@
 </template>
 
 <script>
-import { defineComponent } from "vue";
+import { defineComponent, inject } from "vue";
+import { useStore } from "vuex";
 
 export default defineComponent({
   name: "MainLayout",
+  setup() {
+    const store = useStore();
+    const stopReplication = inject("stopReplication");
+    function logout() {
+      try {
+        store.commit("rxdb/LOGOUT");
+        stopReplication();
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    return {
+      logout,
+    };
+  },
 });
 </script>

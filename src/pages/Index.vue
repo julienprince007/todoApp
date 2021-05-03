@@ -1,19 +1,19 @@
 <template>
   <div class="container">
     <div>
-      <User />
+      <Login />
     </div>
   </div>
 </template>
 
 <script>
 import { defineComponent } from "vue";
-import User from "./User";
+import Login from "./Login";
 
 export default defineComponent({
   name: "PageIndex",
   components: {
-    User,
+    Login,
   },
 });
 </script>

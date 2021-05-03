@@ -33,14 +33,15 @@
 <script>
 import { defineComponent, ref, inject } from "vue";
 import { useRouter } from "vue-router";
-
+import { useStore } from "vuex";
 import usersData from "../users.json";
-import schema from "../rxdb/schema/schemaRxdb";
 
 export default defineComponent({
   name: "User",
   setup() {
     const router = useRouter();
+    const store = useStore();
+
     const loading = ref(false);
 
     const name = ref("");
@@ -51,11 +52,17 @@ export default defineComponent({
       const user = await usersData.find((user) => user.name == name.value);
       if (user) {
         if (user.password === password.value) {
-          await createDb(user.name, schema);
-          loading.value = true;
-          setTimeout(() => {
-            router.push(`/todo/${user.id}`);
-          }, 1000);
+          try {
+            await createDb(user.name);
+            store.commit("rxdb/SET_DBNAME", user.name);
+            loading.value = true;
+            setTimeout(() => {
+              loading.value = false;
+              router.push(`/todo/${user.id}`);
+            }, 1000);
+          } catch (error) {
+            console.log(error);
+          }
         }
       } else {
         console.log("user not found");

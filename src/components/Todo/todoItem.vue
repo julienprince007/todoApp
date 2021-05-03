@@ -37,7 +37,7 @@
 
 <script>
 import { defineComponent } from "vue";
-import todoMethods from "../../todoComposition/todoMethods";
+import todoMethods from "./todoMethods";
 
 export default defineComponent({
   name: "Item",

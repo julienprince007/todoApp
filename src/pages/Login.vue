@@ -54,7 +54,7 @@ export default defineComponent({
         if (user.password === password.value) {
           try {
             await createDb(user.name);
-            store.commit("rxdb/SET_DBNAME", user.name);
+            store.commit("rxdb/SET_DBNAME");
             loading.value = true;
             setTimeout(() => {
               loading.value = false;

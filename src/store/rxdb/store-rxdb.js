@@ -3,23 +3,21 @@ import { LocalStorage } from "quasar";
 const state = {
   rxdbInfos: {
     dbName: "",
-    collectionName: null,
+    collectionsName: [],
   },
 };
 
 const mutations = {
-  SET_DBNAME(state, name) {
-    state.rxdbInfos.dbName = name;
-    LocalStorage.set("dbName", name);
-  },
-  SET_COLLECTIONNAME(state, name) {
-    state.rxdbInfos.collectionName = name;
-    LocalStorage.set("collectionName", name);
+  SET_DBNAME(state) {
+    const dbName = LocalStorage.getItem("dbName");
+    const collectionsName = LocalStorage.getItem("collectionsName");
+    state.rxdbInfos.dbName = dbName;
+    state.rxdbInfos.collectionsName = collectionsName;
   },
   LOGOUT(state) {
     state.rxdbInfos = {
       dbName: "",
-      collectionName: "",
+      collectionName: [],
     };
     LocalStorage.clear();
   },

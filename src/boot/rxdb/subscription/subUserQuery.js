@@ -1,7 +1,7 @@
 const query = `
     subscription {
         users {
-            id
+            name
         }
     }`;
 export default query;

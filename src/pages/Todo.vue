@@ -9,8 +9,7 @@
 </template>
 
 <script>
-import { defineComponent, onMounted, inject, computed } from "vue";
-import { useStore } from "vuex";
+import { defineComponent, onMounted, inject } from "vue";
 
 import NewTodo from "components/Todo/New";
 import TodoList from "components/Todo/List";
@@ -24,14 +23,9 @@ export default defineComponent({
 
   setup() {
     const { initReplication } = inject("DB");
-    const store = useStore();
-
-    const collectionName = computed(() => store.getters["rxdb/getInfos"]);
-    const arrayOfName = Object.values(collectionName.value.collectionName);
-    const todoName = arrayOfName.find((name) => name === "todos");
     onMounted(async () => {
       try {
-        await initReplication(todoName);
+        await initReplication();
       } catch (error) {
         console.log("error: ", error);
       }

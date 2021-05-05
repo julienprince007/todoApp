@@ -1,7 +1,8 @@
 const query = `
 subscription{
   todo {
-    id
+    text
+    isCompleted
   }
 }`;
 export default query;

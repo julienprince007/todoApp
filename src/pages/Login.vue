@@ -59,10 +59,12 @@ export default defineComponent({
             setTimeout(() => {
               loading.value = false;
               router.push(`/todo/${user.id}`);
-            }, 1000);
+            }, 500);
           } catch (error) {
             console.log(error);
           }
+        } else {
+          console.log("mot de passe erroné");
         }
       } else {
         console.log("user not found");

@@ -10,6 +10,10 @@ export default function todoMethods() {
   const tasks = ref([]);
 
   const collection = getCollection("todos");
+  if (collection === undefined) {
+    console.log("undefined");
+    collection = getDB.todos;
+  }
 
   async function findOneTodo(id) {
     return await collection.find({
@@ -59,30 +63,25 @@ export default function todoMethods() {
 
   function findTask() {
     if (collection === null) {
-      getDB.todos
-        .find({
-          selector: { user_id: { $eq: route.params.userId } },
-        })
-        .sort("created_at")
-        .$.subscribe((todos) => {
-          if (!todos) {
-            return;
-          }
-          tasks.value = todos;
-        });
+      const localDB = getDB();
+      setupQuery(localDB.todos);
     } else {
-      collection
-        .find({
-          selector: { user_id: { $eq: route.params.userId } },
-        })
-        .sort("created_at")
-        .$.subscribe((todos) => {
-          if (!todos) {
-            return;
-          }
-          tasks.value = todos;
-        });
+      setupQuery(collection);
     }
+  }
+
+  function setupQuery(collection) {
+    collection
+      .find({
+        selector: { user_id: { $eq: route.params.userId } },
+      })
+      .sort("created_at")
+      .$.subscribe((todos) => {
+        if (!todos) {
+          return;
+        }
+        tasks.value = todos;
+      });
   }
 
   return {

@@ -2,11 +2,13 @@
   {
     "id": "bfedd9ed-8397-4113-9ffa-616798416f71",
     "name": "test",
-    "password": "test"
+    "password": "test",
+    "role": "public"
   },
   {
     "id": "4ea4aabf-6e05-4368-8a09-3dbef2027069",
     "name": "prince",
-    "password": "prince"
+    "password": "prince",
+    "role": "private"
   }
 ]

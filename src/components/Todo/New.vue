@@ -19,22 +19,28 @@
 import { defineComponent, ref, inject } from "vue";
 import { v4 as uuidv4 } from "uuid";
 import { useRoute } from "vue-router";
+import { useStore } from "vuex";
 
 export default defineComponent({
   name: "newTodo",
   setup() {
-    const todoName = ref("");
     const route = useRoute();
+    const store = useStore();
+
+    const todoName = ref("");
+    const role = store.getters["rxdb/getUser"];
+    let cat_Id = role === "public" ? 1 : 2;
+
     const { getCollection } = inject("DB");
 
     const onSubmit = async () => {
       const collection = getCollection("todos");
-
       if (todoName.value !== "") {
         const obj = {
           id: uuidv4(),
           text: todoName.value,
           isCompleted: false,
+          category_id: cat_Id,
           user_id: route.params.userId,
           created_at: new Date().toISOString(),
           updated_at: new Date().toISOString(),

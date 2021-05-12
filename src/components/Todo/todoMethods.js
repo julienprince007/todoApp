@@ -11,7 +11,6 @@ export default function todoMethods() {
 
   const collection = getCollection("todos");
   if (collection === undefined) {
-    console.log("undefined");
     collection = getDB.todos;
   }
 
@@ -72,9 +71,7 @@ export default function todoMethods() {
 
   function setupQuery(collection) {
     collection
-      .find({
-        selector: { user_id: { $eq: route.params.userId } },
-      })
+      .find()
       .sort("created_at")
       .$.subscribe((todos) => {
         if (!todos) {

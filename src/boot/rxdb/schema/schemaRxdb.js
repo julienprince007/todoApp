@@ -12,6 +12,9 @@ const schema = {
       user_id: {
         type: "string",
       },
+      category_id: {
+        type: "number",
+      },
       text: {
         type: "string",
       },

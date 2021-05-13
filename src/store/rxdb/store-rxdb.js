@@ -5,9 +5,7 @@ const state = {
     dbName: "",
     collectionsName: [],
   },
-  user: {
-    role: "",
-  },
+  user: null,
 };
 
 const mutations = {
@@ -18,20 +16,21 @@ const mutations = {
     state.rxdbInfos.collectionsName = collectionsName;
   },
   SET_USER(state, payload) {
-    state.user.role = payload;
+    state.user = payload;
   },
   LOGOUT(state) {
     state.rxdbInfos = {
       dbName: "",
       collectionName: [],
     };
+    state.user = null;
     LocalStorage.clear();
   },
 };
 
 const getters = {
   getInfos: (state) => state.rxdbInfos,
-  getUser: (state) => state.user.role,
+  getUser: (state) => state.user,
 };
 
 export default {

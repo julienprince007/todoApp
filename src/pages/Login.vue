@@ -50,16 +50,16 @@ export default defineComponent({
 
     const onSubmit = async () => {
       const user = await usersData.find((user) => user.name == name.value);
-      const userInfos = {
-        id: user.id,
-        role: user.role,
-      };
       if (user) {
+        const userInfos = {
+          role: user.role,
+          org: user.idOrg,
+        };
         if (user.password === password.value) {
           try {
             await createDb(user.name, userInfos);
             store.commit("rxdb/SET_DBNAME");
-            store.commit("rxdb/SET_USER", user.role);
+            store.commit("rxdb/SET_USER", user.userInfos);
             loading.value = true;
             setTimeout(() => {
               loading.value = false;

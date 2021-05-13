@@ -26,7 +26,7 @@ export default defineComponent({
   setup() {
     const route = useRoute();
     const store = useStore();
-
+    //TODO:gerer les categoris des todos
     const todoName = ref("");
     const role = store.getters["rxdb/getUser"];
     let cat_Id = role === "public" ? 1 : 2;

@@ -1,14 +1,30 @@
 [
   {
     "id": "bfedd9ed-8397-4113-9ffa-616798416f71",
-    "name": "test",
+    "name": "test_premium",
     "password": "test",
-    "role": "public"
+    "role": "premium",
+    "idOrg": "1"
+  },
+  {
+    "id": "bfedd9ed-8397-4113-9ffa-616798416f71",
+    "name": "test_free",
+    "password": "test",
+    "role": "free",
+    "idOrg": "1"
   },
   {
     "id": "4ea4aabf-6e05-4368-8a09-3dbef2027069",
-    "name": "prince",
+    "name": "prince_premium",
     "password": "prince",
-    "role": "private"
+    "role": "premium",
+    "idOrg": "2"
+  },
+  {
+    "id": "4ea4aabf-6e05-4368-8a09-3dbef2027069",
+    "name": "prince_free",
+    "password": "prince",
+    "role": "free",
+    "idOrg": "2"
   }
 ]

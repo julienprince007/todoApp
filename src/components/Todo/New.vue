@@ -1,10 +1,18 @@
 <template>
-  <div class="row q-pa-md">
+  <div class="row q-pa-md justify-center">
     <q-form @submit="onSubmit" name="insertForm">
       <div class="q-mt-md">
-        <div class="row">
+        <div class="row justify-between">
           <q-input rounded v-model="todoName" label="New Task" />
-          <q-select class="q-ml-md" v-model="model" :options="options" />
+          <div style="min-width: 200px">
+            <q-select
+              v-if="todoName.length"
+              class="q-ml-xl"
+              v-model="model"
+              :options="options"
+              label="Catégorie"
+            />
+          </div>
         </div>
         <q-btn
           outline
@@ -30,7 +38,7 @@ export default defineComponent({
     const route = useRoute();
     const store = useStore();
     //TODO:gerer les categoris des todos
-    const model = ref("daily_task");
+    const model = ref(null);
     const todoName = ref("");
 
     const { role, org } = store.getters["rxdb/getUser"];

@@ -59,7 +59,7 @@ export default defineComponent({
           try {
             await createDb(user.name, userInfos);
             store.commit("rxdb/SET_DBNAME");
-            store.commit("rxdb/SET_USER", user.userInfos);
+            store.commit("rxdb/SET_USER", userInfos);
             loading.value = true;
             setTimeout(() => {
               loading.value = false;

@@ -10,6 +10,7 @@
       >
         <TodoItem
           :text="task.text"
+          :cat_id="task.category_id"
           :todo="task"
           :isCompleted="task.isCompleted"
         />

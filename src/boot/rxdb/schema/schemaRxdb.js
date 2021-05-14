@@ -15,6 +15,9 @@ const schema = {
       category_id: {
         type: "number",
       },
+      company_id: {
+        type: "number",
+      },
       text: {
         type: "string",
       },

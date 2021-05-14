@@ -6,6 +6,7 @@
           {{ text }}
         </p>
       </q-item-label>
+      <q-item-label caption>Catégorie: {{ cat_name }}</q-item-label>
     </q-item-section>
 
     <q-item-section top side>
@@ -36,25 +37,46 @@
 </template>
 
 <script>
-import { defineComponent } from "vue";
+import { defineComponent, computed } from "vue";
 import todoMethods from "./todoMethods";
 
 export default defineComponent({
   name: "Item",
   props: {
     todo: Object,
+    cat_id: Number,
     text: String,
     isCompleted: Boolean,
   },
 
-  setup() {
+  setup(props) {
     const { toggleTodo, removeTodo, updateTodo, rowClass } = todoMethods();
+
+    let cat_name = computed(() => {
+      switch (props.cat_id) {
+        case 1:
+          return "daily_task";
+          break;
+        case 2:
+          return "work_planing";
+          break;
+        case 3:
+          return "shopping_lists";
+          break;
+        case 4:
+          return "reminder";
+          break;
+        default:
+          return "";
+      }
+    });
 
     return {
       rowClass,
       toggleTodo,
       removeTodo,
       updateTodo,
+      cat_name,
     };
   },
 });

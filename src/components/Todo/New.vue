@@ -2,7 +2,10 @@
   <div class="row q-pa-md">
     <q-form @submit="onSubmit" name="insertForm">
       <div class="q-mt-md">
-        <q-input rounded v-model="todoName" label="New Task" />
+        <div class="row">
+          <q-input rounded v-model="todoName" label="New Task" />
+          <q-select class="q-ml-md" v-model="model" :options="options" />
+        </div>
         <q-btn
           outline
           type="submit"
@@ -16,7 +19,7 @@
 </template>
 
 <script>
-import { defineComponent, ref, inject } from "vue";
+import { defineComponent, ref, inject, computed } from "vue";
 import { v4 as uuidv4 } from "uuid";
 import { useRoute } from "vue-router";
 import { useStore } from "vuex";
@@ -27,9 +30,32 @@ export default defineComponent({
     const route = useRoute();
     const store = useStore();
     //TODO:gerer les categoris des todos
+    const model = ref("daily_task");
     const todoName = ref("");
-    const role = store.getters["rxdb/getUser"];
-    let cat_Id = role === "public" ? 1 : 2;
+
+    const { role, org } = store.getters["rxdb/getUser"];
+    let options =
+      role === "free"
+        ? ["daily_task", "work_planing"]
+        : ["daily_task", "work_planing", "shopping_lists", "reminder"];
+    let cat_Id = computed(() => {
+      switch (model.value) {
+        case "daily_task":
+          return 1;
+          break;
+        case "work_planing":
+          return 2;
+          break;
+        case "shopping_lists":
+          return 3;
+          break;
+        case "reminder":
+          return 4;
+          break;
+        default:
+          return 1;
+      }
+    });
 
     const { getCollection } = inject("DB");
 
@@ -40,7 +66,8 @@ export default defineComponent({
           id: uuidv4(),
           text: todoName.value,
           isCompleted: false,
-          category_id: cat_Id,
+          category_id: cat_Id.value,
+          company_id: +org,
           user_id: route.params.userId,
           created_at: new Date().toISOString(),
           updated_at: new Date().toISOString(),
@@ -53,6 +80,8 @@ export default defineComponent({
     return {
       todoName,
       onSubmit,
+      model,
+      options,
     };
   },
 });

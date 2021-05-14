@@ -7,6 +7,13 @@
     "idOrg": "1"
   },
   {
+    "id": "bfedd9ed-8397-4113-9ffa-616798416f75",
+    "name": "test_free_2",
+    "password": "test",
+    "role": "free",
+    "idOrg": "1"
+  },
+  {
     "id": "bfedd9ed-8397-4113-9ffa-616798416f71",
     "name": "test_free",
     "password": "test",
@@ -21,7 +28,7 @@
     "idOrg": "2"
   },
   {
-    "id": "4ea4aabf-6e05-4368-8a09-3dbef2027069",
+    "id": "bfedd9ed-8397-4113-9ffa-616798416f71",
     "name": "prince_free",
     "password": "prince",
     "role": "free",

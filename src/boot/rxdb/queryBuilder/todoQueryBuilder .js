@@ -23,6 +23,7 @@ export const todoPullQueryBuilder = (doc) => {
                   updated_at
                   user_id
                   category_id
+                  company_id
                 }
               }`;
   return {
@@ -34,7 +35,7 @@ export const todoPullQueryBuilder = (doc) => {
 export const todoPushQueryBuilder = (doc) => {
   const query = `
                 mutation InsertTodo($todo: [todo_insert_input!]!) {
-                  insert_todo(objects: $todo, on_conflict: {constraint: todo_pkey, update_columns: [category_id, text, isCompleted, deleted, updated_at]}) {
+                  insert_todo(objects: $todo, on_conflict: {constraint: todo_pkey, update_columns: [category_id, company_id, text, isCompleted, deleted, updated_at]}) {
                     returning {
                       id
                     }

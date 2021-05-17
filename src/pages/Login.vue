@@ -34,7 +34,7 @@
 import { defineComponent, ref, inject } from "vue";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
-import usersData from "../users.json";
+import axios from "axios";
 
 export default defineComponent({
   name: "User",
@@ -49,31 +49,24 @@ export default defineComponent({
     const { createDb } = inject("DB");
 
     const onSubmit = async () => {
-      const user = await usersData.find((user) => user.name == name.value);
-      if (user) {
-        const userInfos = {
-          role: user.role,
-          org: user.idOrg,
-        };
-        if (user.password === password.value) {
-          try {
-            await createDb(user.name, userInfos);
-            store.commit("rxdb/SET_DBNAME");
-            store.commit("rxdb/SET_USER", userInfos);
-            loading.value = true;
-            setTimeout(() => {
-              loading.value = false;
-              router.push(`/todo/${user.id}`);
-            }, 500);
-          } catch (error) {
-            console.log(error);
-          }
-        } else {
-          console.log("mot de passe erroné");
-        }
-      } else {
-        console.log("user not found");
-      }
+      loading.value = true;
+
+      axios
+        .post("http://localhost:3000/login", {
+          username: name.value,
+          password: password.value,
+        })
+        .then(async function (response) {
+          loading.value = false;
+          const { data } = response;
+          // await createDb(data.user.name, userInfos);
+          // router.push(`/todo/${user.id}`);
+          // store.commit("rxdb/SET_DBNAME");
+        })
+        .catch(function (error) {
+          loading.value = false;
+          console.log(error);
+        });
     };
 
     return {

@@ -50,18 +50,24 @@ export default defineComponent({
 
     const onSubmit = async () => {
       loading.value = true;
-
       axios
         .post("http://localhost:3000/login", {
           username: name.value,
           password: password.value,
         })
         .then(async function (response) {
-          loading.value = false;
           const { data } = response;
-          // await createDb(data.user.name, userInfos);
-          // router.push(`/todo/${user.id}`);
-          // store.commit("rxdb/SET_DBNAME");
+          try {
+            await createDb(data.user.name, data.token);
+            store.commit("rxdb/SET_DBNAME", data.user);
+            loading.value = true;
+            setTimeout(() => {
+              loading.value = false;
+              router.push(`/todo/${data.user.id}`);
+            }, 500);
+          } catch (error) {
+            console.log(error);
+          }
         })
         .catch(function (error) {
           loading.value = false;

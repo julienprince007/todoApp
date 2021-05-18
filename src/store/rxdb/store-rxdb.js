@@ -9,15 +9,14 @@ const state = {
 };
 
 const mutations = {
-  SET_DBNAME(state) {
+  SET_DBNAME(state, payload) {
     const dbName = LocalStorage.getItem("dbName");
     const collectionsName = LocalStorage.getItem("collectionsName");
     state.rxdbInfos.dbName = dbName;
     state.rxdbInfos.collectionsName = collectionsName;
-  },
-  SET_USER(state, payload) {
     state.user = payload;
   },
+
   LOGOUT(state) {
     state.rxdbInfos = {
       dbName: "",

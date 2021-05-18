@@ -41,7 +41,7 @@ export default defineComponent({
     const model = ref(null);
     const todoName = ref("");
 
-    const { role, org } = store.getters["rxdb/getUser"];
+    const { role, companyId } = store.getters["rxdb/getUser"];
     let options =
       role === "free"
         ? ["daily_task", "work_planing"]
@@ -75,7 +75,7 @@ export default defineComponent({
           text: todoName.value,
           isCompleted: false,
           category_id: cat_Id.value,
-          company_id: +org,
+          company_id: companyId,
           user_id: route.params.userId,
           created_at: new Date().toISOString(),
           updated_at: new Date().toISOString(),

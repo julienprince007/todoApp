@@ -17,7 +17,6 @@ export default async ({ app, store, router }) => {
   app.use(replication);
   // call initRxdb function
   const initRxdb = app.config.globalProperties.$initRxdb;
-  const secret = process.env.SECRET;
   const urlwebSocket = process.env.URLWEBSOCKET;
   const urlsync = process.env.SYNCURL;
 
@@ -34,7 +33,7 @@ export default async ({ app, store, router }) => {
     { sub: subscriptionUserQuery },
   ];
 
-  initRxdb(secret, urlwebSocket, urlsync, querys, schema);
+  initRxdb(urlwebSocket, urlsync, querys, schema);
 
   router.beforeEach(async (to, from, next) => {
     const dbName = LocalStorage.getItem("dbName");

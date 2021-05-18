@@ -15,35 +15,35 @@ const users = [
     name: "test_premium",
     password: "test",
     role: "premium",
-    idOrg: "1",
+    companyId: 1,
   },
   {
     id: "bfedd9ed-8397-4113-9ffa-616798416f75",
     name: "test_free_2",
     password: "test",
     role: "free",
-    idOrg: "1",
+    companyId: 1,
   },
   {
     id: "bfedd9ed-8397-4113-9ffa-616798416f71",
     name: "test_free",
     password: "test",
     role: "free",
-    idOrg: "1",
+    companyId: 1,
   },
   {
     id: "4ea4aabf-6e05-4368-8a09-3dbef2027069",
     name: "prince_premium",
     password: "prince",
     role: "premium",
-    idOrg: "2",
+    companyId: 2,
   },
   {
     id: "bfedd9ed-8397-4113-9ffa-616798416f71",
     name: "prince_free",
     password: "prince",
     role: "free",
-    idOrg: "2",
+    companyId: 2,
   },
 ];
 
@@ -55,19 +55,24 @@ app.post("/login", (req, res) => {
   if (user) {
     if (user.password === password) {
       const token = {
-        username: username,
+        user: { id: user.id, name: user.name, role: user.role },
         "https://hasura.io/jwt/claims": {
-          " x-hasura-default-role ": user.role,
-          " x- hasura-org-id ": user.idOrg,
+          "x-hasura-allowed-roles": ["premium", "free"],
+          "x-hasura-default-role": user.role,
+          "x-hasura-company-id": user.companyId.toString(),
         },
       };
-      setTimeout(() => {
-        const accessToken = jwt.sign(token, process.env.ACCESS_TOKEN_SECRET);
-        res.json({
-          user: { id: user.id, name: user.name },
-          token: accessToken,
-        });
-      }, 500);
+
+      const accessToken = jwt.sign(token, process.env.ACCESS_TOKEN_SECRET);
+      res.json({
+        user: {
+          id: user.id,
+          name: user.name,
+          companyId: user.companyId,
+          role: user.role,
+        },
+        token: accessToken,
+      });
     } else {
       res.status(403);
       res.json({

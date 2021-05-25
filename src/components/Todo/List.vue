@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import { defineComponent, onMounted, computed } from "vue";
+import { defineComponent, onMounted } from "vue";
 
 import TodoItem from "./todoItem";
 import todoMethods from "./todoMethods";
@@ -45,14 +45,12 @@ export default defineComponent({
   setup() {
     const { findTask, tasks } = todoMethods();
     //surveil instance collection
-    const collection = computed(() => getCollection("todos"));
     onMounted(() => {
       findTask();
     });
 
     return {
       tasks,
-      collection,
     };
   },
 });

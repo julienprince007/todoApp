@@ -1,18 +1,13 @@
 import { inject, ref } from "vue";
 import { useQuasar } from "quasar";
-import { useRoute } from "vue-router";
 
 export default function todoMethods() {
   const { getCollection } = inject("DB");
   const $q = useQuasar();
   const { getDB } = inject("DB");
-  const route = useRoute();
   const tasks = ref([]);
 
   const collection = getCollection("todos");
-  if (collection === undefined) {
-    collection = getDB.todos;
-  }
 
   async function findOneTodo(id) {
     return await collection.find({

@@ -17,6 +17,9 @@ export default async ({ app, store, router }) => {
   app.use(replication);
   // call initRxdb function
   const initRxdb = app.config.globalProperties.$initRxdb;
+  const createDb = app.config.globalProperties.$createDb;
+  const initReplication = app.config.globalProperties.$initReplication;
+
   const urlwebSocket = process.env.URLWEBSOCKET;
   const urlsync = process.env.SYNCURL;
 
@@ -36,18 +39,16 @@ export default async ({ app, store, router }) => {
   initRxdb(urlwebSocket, urlsync, querys, schema);
 
   router.beforeEach(async (to, from, next) => {
-    const dbName = LocalStorage.getItem("dbName");
-    let dbInfos = store.getters["rxdb/getInfos"];
-    if (dbName !== null) {
-      if (dbInfos.dbName === "" && !dbInfos.collectionsName.length) {
-        store.commit("rxdb/SET_DBNAME", dbName);
-        const createDb = app.config.globalProperties.$createDb;
-        const initReplication = app.config.globalProperties.$initReplication;
-        const localDB = await createDb(dbName);
+    const user = LocalStorage.getItem("user");
+    let userState = store.getters["rxdb/getUser"];
+
+    if (user !== null) {
+      if (userState === null) {
+        store.commit("rxdb/SET_DBNAME", user);
+        await createDb(user.name, user.token);
         setTimeout(() => {
           initReplication();
-        }, 200);
-        app.provide("localDB", localDB);
+        }, 500);
       }
     }
     next();

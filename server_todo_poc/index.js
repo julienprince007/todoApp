@@ -70,8 +70,8 @@ app.post("/login", (req, res) => {
           name: user.name,
           companyId: user.companyId,
           role: user.role,
+          token: accessToken,
         },
-        token: accessToken,
       });
     } else {
       res.status(403);

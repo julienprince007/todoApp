@@ -23,6 +23,7 @@ export default defineComponent({
 
   setup() {
     const { initReplication } = inject("DB");
+
     onMounted(async () => {
       try {
         await initReplication();

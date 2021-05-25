@@ -58,7 +58,7 @@ export default defineComponent({
         .then(async function (response) {
           const { data } = response;
           try {
-            await createDb(data.user.name, data.token);
+            await createDb(data.user.name, data.user.token);
             store.commit("rxdb/SET_DBNAME", data.user);
             loading.value = true;
             setTimeout(() => {
@@ -67,6 +67,7 @@ export default defineComponent({
             }, 500);
           } catch (error) {
             console.log(error);
+            loading.value = false;
           }
         })
         .catch(function (error) {

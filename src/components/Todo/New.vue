@@ -41,11 +41,14 @@ export default defineComponent({
     const model = ref(null);
     const todoName = ref("");
 
-    const { role, companyId } = store.getters["rxdb/getUser"];
-    let options =
-      role === "free"
-        ? ["daily_task", "work_planing"]
-        : ["daily_task", "work_planing", "shopping_lists", "reminder"];
+    const user = store.getters["rxdb/getUser"];
+    let options = [];
+    if (user !== null) {
+      options =
+        user.role === "free"
+          ? ["daily_task", "work_planing"]
+          : ["daily_task", "work_planing", "shopping_lists", "reminder"];
+    }
     let cat_Id = computed(() => {
       switch (model.value) {
         case "daily_task":

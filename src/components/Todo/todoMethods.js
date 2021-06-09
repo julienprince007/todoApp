@@ -1,33 +1,34 @@
-import { inject, ref } from "vue";
-import { useQuasar } from "quasar";
+import { ref } from "vue"
+import { useQuasar } from "quasar"
+import rxdb from "@sowell/rxdb"
 
 export default function todoMethods() {
-  const { getCollection } = inject("DB");
-  const $q = useQuasar();
-  const { getDB } = inject("DB");
-  const tasks = ref([]);
+  const { getCollection, getDB } = rxdb()
 
-  const collection = getCollection("todos");
+  const $q = useQuasar()
+  const tasks = ref([])
+
+  const collection = getCollection("todos")
 
   async function findOneTodo(id) {
     return await collection.find({
-      selector: { id: { $eq: id } },
-    });
+      selector: { id: { $eq: id } }
+    })
   }
 
   async function toggleTodo(todo) {
-    const doc = await findOneTodo(todo.id);
+    const doc = await findOneTodo(todo.id)
     doc.update({
       $set: {
-        isCompleted: !todo.isCompleted,
-      },
-    });
+        isCompleted: !todo.isCompleted
+      }
+    })
   }
 
   async function removeTodo(todo) {
     await findOneTodo(todo.id).then((doc) => {
-      doc.remove();
-    });
+      doc.remove()
+    })
   }
 
   function updateTodo(todo) {
@@ -35,32 +36,32 @@ export default function todoMethods() {
       title: "Modification",
       dark: true,
       prompt: {
-        model: todo.text,
+        model: todo.text
       },
       cancel: true,
-      persistent: true,
+      persistent: true
     }).onOk(async (data) => {
       if (data) {
-        const doc = await findOneTodo(todo.id);
+        const doc = await findOneTodo(todo.id)
         doc.update({
           $set: {
-            text: data,
-          },
-        });
+            text: data
+          }
+        })
       }
-    });
+    })
   }
 
   function rowClass(isCompleted) {
-    return { textThrough: isCompleted };
+    return { textThrough: isCompleted }
   }
 
   function findTask() {
     if (collection === null) {
-      const localDB = getDB();
-      setupQuery(localDB.todos);
+      const localDB = getDB()
+      setupQuery(localDB.todos)
     } else {
-      setupQuery(collection);
+      setupQuery(collection)
     }
   }
 
@@ -70,10 +71,10 @@ export default function todoMethods() {
       .sort("created_at")
       .$.subscribe((todos) => {
         if (!todos) {
-          return;
+          return
         }
-        tasks.value = todos;
-      });
+        tasks.value = todos
+      })
   }
 
   return {
@@ -83,6 +84,6 @@ export default function todoMethods() {
     updateTodo,
     rowClass,
     findTask,
-    tasks,
-  };
+    tasks
+  }
 }

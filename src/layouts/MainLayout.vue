@@ -21,25 +21,27 @@
 </template>
 
 <script>
-import { defineComponent, inject } from "vue";
-import { useStore } from "vuex";
+import { defineComponent } from "vue"
+import { useStore } from "vuex"
 
+import rxdb from "@sowell/rxdb"
 export default defineComponent({
   name: "MainLayout",
   setup() {
-    const store = useStore();
-    const stopReplication = inject("stopReplication");
+    const { stopReplication } = rxdb()
+    const store = useStore()
+
     function logout() {
       try {
-        store.commit("rxdb/LOGOUT");
-        stopReplication();
+        stopReplication()
+        store.commit("rxdb/LOGOUT")
       } catch (error) {
-        console.log(error);
+        console.log(error)
       }
     }
     return {
-      logout,
-    };
-  },
-});
+      logout
+    }
+  }
+})
 </script>

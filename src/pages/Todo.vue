@@ -9,30 +9,30 @@
 </template>
 
 <script>
-import { defineComponent, onMounted, inject } from "vue";
+import { defineComponent, onMounted } from "vue"
 
-import NewTodo from "components/Todo/New";
-import TodoList from "components/Todo/List";
+import NewTodo from "components/Todo/New"
+import TodoList from "components/Todo/List"
+import rxdb from "@sowell/rxdb"
 
 export default defineComponent({
   name: "PageIndex",
   components: {
     NewTodo,
-    TodoList,
+    TodoList
   },
 
   setup() {
-    const { initReplication } = inject("DB");
-
+    const { initReplication } = rxdb()
     onMounted(async () => {
       try {
-        await initReplication();
+        await initReplication()
       } catch (error) {
-        console.log("error: ", error);
+        console.log("error: ", error)
       }
-    });
+    })
 
-    return {};
-  },
-});
+    return {}
+  }
+})
 </script>

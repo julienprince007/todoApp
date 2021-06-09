@@ -27,73 +27,72 @@
 </template>
 
 <script>
-import { defineComponent, ref, inject, computed } from "vue";
-import { v4 as uuidv4 } from "uuid";
-import { useRoute } from "vue-router";
-import { useStore } from "vuex";
+import { defineComponent, ref, computed } from "vue"
+import { v4 as uuidv4 } from "uuid"
+import { useRoute } from "vue-router"
+import { useStore } from "vuex"
+
+import rxdb from "@sowell/rxdb"
 
 export default defineComponent({
   name: "newTodo",
   setup() {
-    const route = useRoute();
-    const store = useStore();
-    //TODO:gerer les categoris des todos
-    const model = ref(null);
-    const todoName = ref("");
+    const route = useRoute()
+    const store = useStore()
+    const model = ref(null)
+    const todoName = ref("")
+    const { getCollection } = rxdb()
 
-    const user = store.getters["rxdb/getUser"];
-    let options = [];
+    const user = store.getters["rxdb/getUser"]
+    let options = []
     if (user !== null) {
       options =
         user.role === "free"
           ? ["daily_task", "work_planing"]
-          : ["daily_task", "work_planing", "shopping_lists", "reminder"];
+          : ["daily_task", "work_planing", "shopping_lists", "reminder"]
     }
     let cat_Id = computed(() => {
       switch (model.value) {
         case "daily_task":
-          return 1;
-          break;
+          return 1
+          break
         case "work_planing":
-          return 2;
-          break;
+          return 2
+          break
         case "shopping_lists":
-          return 3;
-          break;
+          return 3
+          break
         case "reminder":
-          return 4;
-          break;
+          return 4
+          break
         default:
-          return 1;
+          return 1
       }
-    });
-
-    const { getCollection } = inject("DB");
+    })
 
     const onSubmit = async () => {
-      const collection = getCollection("todos");
+      const collection = getCollection("todos")
       if (todoName.value !== "") {
         const obj = {
           id: uuidv4(),
           text: todoName.value,
           isCompleted: false,
           category_id: cat_Id.value,
-          company_id: companyId,
           user_id: route.params.userId,
           created_at: new Date().toISOString(),
-          updated_at: new Date().toISOString(),
-        };
-        await collection.insert(obj);
-        todoName.value = "";
+          updated_at: new Date().toISOString()
+        }
+        await collection.insert(obj)
+        todoName.value = ""
       }
-    };
+    }
 
     return {
       todoName,
       onSubmit,
       model,
-      options,
-    };
-  },
-});
+      options
+    }
+  }
+})
 </script>

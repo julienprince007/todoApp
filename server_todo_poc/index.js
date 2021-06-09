@@ -1,13 +1,14 @@
-require("dotenv").config();
+/* eslint-disable no-undef */
+require("dotenv").config()
 
-const express = require("express");
-const jwt = require("jsonwebtoken");
-const cors = require("cors");
+const express = require("express")
+const jwt = require("jsonwebtoken")
+const cors = require("cors")
 
-const app = express();
+const app = express()
 
-app.use(express.json());
-app.use(cors());
+app.use(express.json())
+app.use(cors())
 
 const users = [
   {
@@ -15,43 +16,43 @@ const users = [
     name: "test_premium",
     password: "test",
     role: "premium",
-    companyId: 1,
+    companyId: 1
   },
   {
     id: "bfedd9ed-8397-4113-9ffa-616798416f75",
     name: "test_free_2",
     password: "test",
     role: "free",
-    companyId: 1,
+    companyId: 1
   },
   {
     id: "bfedd9ed-8397-4113-9ffa-616798416f71",
-    name: "test_free",
+    name: "test",
     password: "test",
     role: "free",
-    companyId: 1,
+    companyId: 1
   },
   {
     id: "4ea4aabf-6e05-4368-8a09-3dbef2027069",
     name: "prince_premium",
     password: "prince",
     role: "premium",
-    companyId: 2,
+    companyId: 2
   },
   {
     id: "bfedd9ed-8397-4113-9ffa-616798416f71",
     name: "prince_free",
     password: "prince",
     role: "free",
-    companyId: 2,
-  },
-];
+    companyId: 2
+  }
+]
 
 app.post("/login", (req, res) => {
-  const username = req.body.username;
-  const password = req.body.password;
+  const username = req.body.username
+  const password = req.body.password
 
-  const user = users.find((user) => user.name == username);
+  const user = users.find((user) => user.name == username)
   if (user) {
     if (user.password === password) {
       const token = {
@@ -59,32 +60,32 @@ app.post("/login", (req, res) => {
         "https://hasura.io/jwt/claims": {
           "x-hasura-allowed-roles": ["premium", "free"],
           "x-hasura-default-role": user.role,
-          "x-hasura-company-id": user.companyId.toString(),
-        },
-      };
+          "x-hasura-company-id": user.companyId.toString()
+        }
+      }
 
-      const accessToken = jwt.sign(token, process.env.ACCESS_TOKEN_SECRET);
+      const accessToken = jwt.sign(token, process.env.ACCESS_TOKEN_SECRET)
       res.json({
         user: {
           id: user.id,
           name: user.name,
           companyId: user.companyId,
           role: user.role,
-          token: accessToken,
-        },
-      });
+          token: accessToken
+        }
+      })
     } else {
-      res.status(403);
+      res.status(403)
       res.json({
-        error: "mot de passe erroné",
-      });
+        error: "mot de passe erroné"
+      })
     }
   } else {
-    res.status(403);
+    res.status(403)
     res.json({
-      error: "user not found",
-    });
+      error: "user not found"
+    })
   }
-});
+})
 
-app.listen(3000);
+app.listen(3000)

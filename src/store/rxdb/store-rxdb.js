@@ -6,7 +6,6 @@ const state = {
 
 const mutations = {
   setUser(state, payload) {
-    console.log("payload", payload)
     state.user = payload
     LocalStorage.set("user", payload)
   },
@@ -18,6 +17,8 @@ const mutations = {
 }
 
 const getters = {
+  getDbName: (state) => state.user.name,
+  getToken: (state) => state.user.token,
   getUser: (state) => state.user
 }
 

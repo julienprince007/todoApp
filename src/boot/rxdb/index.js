@@ -29,17 +29,17 @@ export default async () => {
   initRxdb(querys, schema)
 
   // router.beforeEach(async (to, from, next) => {
-  //   const user = LocalStorage.getItem("user");
-  //   let userState = store.getters["rxdb/getUser"];
+  //   const user = LocalStorage.getItem("user")
+  //   let userState = store.getters["rxdb/getUser"]
   //   if (user !== null) {
   //     if (userState === null) {
-  //       store.commit("rxdb/setUser", user);
-  //       await createDb(user.name, user.token);
+  //       store.commit("rxdb/setUser", user)
+  //       await createDb(user.name, user.token)
   //       setTimeout(() => {
-  //         initReplication();
-  //       }, 500);
+  //         initReplication()
+  //       }, 500)
   //     }
   //   }
-  //   next();
-  // });
+  //   next()
+  // })
 }

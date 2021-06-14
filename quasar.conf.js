@@ -10,6 +10,8 @@
 const ESLintPlugin = require("eslint-webpack-plugin")
 const { configure } = require("quasar/wrappers")
 const envparser = require("./src/config/envparser.js")
+const path = require("path")
+
 module.exports = configure(function (/* ctx */) {
   return {
     // https://quasar.dev/quasar-cli/supporting-ts
@@ -21,7 +23,7 @@ module.exports = configure(function (/* ctx */) {
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
     // https://quasar.dev/quasar-cli/boot-files
-    boot: ["rxdb/index", "navigationGuards"],
+    boot: ["rxdb/index", "navigationGuards", "i18n"],
 
     // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-css
     css: ["app.sass"],
@@ -59,14 +61,14 @@ module.exports = configure(function (/* ctx */) {
 
       // Options below are automatically set depending on the env, set them if you want to override
       // extractCSS: false,
-
+      chainWebpack(chain) {
+        chain.resolve.alias.set(
+          "myalias",
+          path.resolve(__dirname, "./src/somefolder")
+        )
+      }
       // https://quasar.dev/quasar-cli/handling-webpack
       // "chain" is a webpack-chain object https://github.com/neutrinojs/webpack-chain
-      chainWebpack(chain) {
-        chain
-          .plugin("eslint-webpack-plugin")
-          .use(ESLintPlugin, [{ extensions: ["js", "vue"] }])
-      }
     },
 
     // Full list of options: https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-devServer

@@ -33,6 +33,8 @@
 <script>
 import { defineComponent, ref } from "vue"
 import { useStore } from "vuex"
+import { useI18n } from "vue-i18n"
+import { useQuasar } from "quasar"
 
 import { useRouter } from "vue-router"
 import axios from "axios"
@@ -42,9 +44,11 @@ export default defineComponent({
   name: "User",
   setup() {
     const store = useStore()
+    const $q = useQuasar()
     const router = useRouter()
     const { createDb } = rxdb()
     const loading = ref(false)
+    const { tm } = useI18n()
 
     const name = ref("")
     const password = ref("")
@@ -73,6 +77,10 @@ export default defineComponent({
             }
           })
           .catch(function (error) {
+            $q.notify({
+              message: tm("failed"),
+              type: "negative"
+            })
             loading.value = false
             console.error(error)
           })
@@ -83,7 +91,8 @@ export default defineComponent({
       name,
       password,
       onSubmit,
-      loading
+      loading,
+      tm
     }
   }
 })

@@ -16,6 +16,7 @@ export default async () => {
   const { initRxdb } = rxdb()
   //init queryBuilders
   let querys = []
+  //nom de la c
   querys["todos"] = [
     { pull: todoPullQueryBuilder },
     { push: todoPushQueryBuilder },

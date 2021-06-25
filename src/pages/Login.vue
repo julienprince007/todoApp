@@ -48,7 +48,7 @@ export default defineComponent({
     const router = useRouter()
     const { createDb } = rxdb()
     const loading = ref(false)
-    const { tm } = useI18n()
+    const { t } = useI18n()
 
     const name = ref("")
     const password = ref("")
@@ -57,12 +57,13 @@ export default defineComponent({
       if (name.value !== "" && password.value !== "") {
         loading.value = true
         axios
-          .post("http://localhost:3000/login", {
+          .post("http://localhost:4300/login", {
             username: name.value,
             password: password.value
           })
           .then(async function (response) {
             const { data } = response
+            console.log("token", data.user.token)
             store.commit("rxdb/setUser", data.user)
             try {
               loading.value = true
@@ -78,7 +79,7 @@ export default defineComponent({
           })
           .catch(function (error) {
             $q.notify({
-              message: tm("failed"),
+              message: t("failed"),
               type: "negative"
             })
             loading.value = false
@@ -91,8 +92,7 @@ export default defineComponent({
       name,
       password,
       onSubmit,
-      loading,
-      tm
+      loading
     }
   }
 })

@@ -27,7 +27,10 @@ export default async () => {
     { push: userPushQueryBuilder },
     { sub: subscriptionUserQuery }
   ]
-  initRxdb(querys, schema)
+
+  const hasura_role = "superadmin"
+
+  initRxdb(querys, schema, hasura_role)
 
   // router.beforeEach(async (to, from, next) => {
   //   const user = LocalStorage.getItem("user")

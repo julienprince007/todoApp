@@ -67,7 +67,7 @@ app.post("/login", (req, res) => {
           exp: Math.floor(Date.now() / 1000) + 60 * 60,
           user: { id: user.id, name: user.name, role: user.role },
           "https://hasura.io/jwt/claims": {
-            "x-hasura-allowed-roles": ["premium", "free"],
+            "x-hasura-allowed-roles": ["premium", "free", "superadmin"],
             "x-hasura-default-role": user.role,
             "x-hasura-allowed-org-ids": user.category_id,
             "x-hasura-company-id": user.companyId.toString()

@@ -1,8 +1,10 @@
 const query = `
 subscription{
   todo {
-    text
+    id
     isCompleted
+    text
+    updated_at
   }
-}`;
-export default query;
+}`
+export default query

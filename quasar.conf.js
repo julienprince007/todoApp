@@ -66,6 +66,8 @@ module.exports = configure(function (/* ctx */) {
           "myalias",
           path.resolve(__dirname, "./src/somefolder")
         )
+        const nodePolyfillWebpackPlugin = require("node-polyfill-webpack-plugin")
+        chain.plugin("node-polyfill").use(nodePolyfillWebpackPlugin)
       }
       // https://quasar.dev/quasar-cli/handling-webpack
       // "chain" is a webpack-chain object https://github.com/neutrinojs/webpack-chain

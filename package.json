@@ -10,25 +10,26 @@
     "test": "echo \"No test specified\" && exit 0"
   },
   "dependencies": {
+    "@babel/polyfill": "^7.12.1",
     "@quasar/extras": "^1.0.0",
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
     "graphql": "^15.5.0",
-    "node-fetch": "^2.6.1",
     "pouchdb-adapter-idb": "^7.2.2",
-    "quasar": "^2.0.0-beta.1",
-    "uuid": "^8.3.2",
+    "quasar": "^2.0.0",
     "vue-i18n": "^9.1.6",
     "vuex": "^4.0.0"
   },
   "devDependencies": {
-    "@quasar/app": "^3.0.0-beta.1",
+    "@quasar/app": "^3.0.0",
     "@quasar/quasar-app-extension-dotenv": "^1.1.0",
+    "@sowell/quasar-app-extension-rxdb": "^0.1.4",
     "babel-eslint": "^10.0.1",
     "eslint": "^7.14.0",
-    "eslint-config-prettier": "^6.15.0",
+    "eslint-config-prettier": "^8.1.0",
     "eslint-plugin-vue": "^7.0.0",
-    "eslint-webpack-plugin": "^2.4.0"
+    "eslint-webpack-plugin": "^2.4.0",
+    "node-polyfill-webpack-plugin": "^1.1.4"
   },
   "browserslist": [
     "last 10 Chrome versions",
@@ -42,8 +43,11 @@
     "last 5 Opera versions"
   ],
   "engines": {
-    "node": ">= 10.18.1",
+    "node": ">= 12.22.1",
     "npm": ">= 6.13.4",
     "yarn": ">= 1.21.1"
+  },
+  "resolutions": {
+    "**/uuid": "^8.1.0"
   }
 }

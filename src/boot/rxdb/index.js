@@ -12,14 +12,11 @@ export default async () => {
   const { initRxdb } = rxdb()
   //init queryBuilders
   let querys = []
-  //nom de la c
   querys["todos"] = [
     { pull: todoPullQueryBuilder },
     { push: todoPushQueryBuilder },
     { sub: subscriptionTodoQuery }
   ]
 
-  const hasura_role = "superadmin"
-
-  initRxdb(querys, schema, hasura_role)
+  initRxdb(querys, schema)
 }

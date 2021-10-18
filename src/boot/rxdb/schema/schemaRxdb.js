@@ -7,60 +7,35 @@ const schema = {
     properties: {
       id: {
         type: "string",
-        primary: true,
+        primary: true
       },
       user_id: {
-        type: "string",
+        type: "string"
       },
       category_id: {
-        type: "number",
+        type: "number"
       },
       company_id: {
-        type: "number",
+        type: "number"
       },
       text: {
-        type: "string",
+        type: "string"
       },
       isCompleted: {
-        type: "boolean",
+        type: "boolean"
       },
       created_at: {
         type: "string",
-        format: "date-time",
+        format: "date-time"
       },
       updated_at: {
         type: "string",
-        format: "date-time",
-      },
+        format: "date-time"
+      }
     },
     required: ["text", "isCompleted", "id", "user_id"],
-    indexes: ["created_at"],
-  },
-  users: {
-    title: "User schema",
-    version: 0,
-    description: "describes a simple user",
-    type: "object",
-    properties: {
-      id: {
-        type: "string",
-        primary: true,
-      },
-      name: {
-        type: "string",
-      },
-      created_at: {
-        type: "string",
-        format: "date-time",
-      },
-      updated_at: {
-        type: "string",
-        format: "date-time",
-      },
-    },
-    required: ["id", "name"],
-    indexes: ["created_at"],
-  },
-};
+    indexes: ["created_at"]
+  }
+}
 
-export default schema;
+export default schema

@@ -2,8 +2,8 @@ export const todoPullQueryBuilder = (doc) => {
   if (!doc) {
     doc = {
       id: "",
-      updated_at: new Date(0).toUTCString(),
-    };
+      updated_at: new Date(0).toUTCString()
+    }
   }
   const query = `
             query listTodos {
@@ -25,12 +25,12 @@ export const todoPullQueryBuilder = (doc) => {
                   category_id
                   company_id
                 }
-              }`;
+              }`
   return {
     query,
-    variables: {},
-  };
-};
+    variables: {}
+  }
+}
 
 export const todoPushQueryBuilder = (doc) => {
   const query = `
@@ -41,12 +41,12 @@ export const todoPushQueryBuilder = (doc) => {
                     }
                   }
                 }
-              `;
+              `
   const variables = {
-    todo: doc,
-  };
+    todo: doc
+  }
   return {
     query,
-    variables,
-  };
-};
+    variables
+  }
+}

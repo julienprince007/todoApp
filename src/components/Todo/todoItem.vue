@@ -37,8 +37,8 @@
 </template>
 
 <script>
-import { defineComponent, computed } from "vue";
-import todoMethods from "./todoMethods";
+import { defineComponent, computed } from "vue"
+import todoMethods from "./todoMethods"
 
 export default defineComponent({
   name: "Item",
@@ -46,40 +46,40 @@ export default defineComponent({
     todo: Object,
     cat_id: Number,
     text: String,
-    isCompleted: Boolean,
+    isCompleted: Boolean
   },
 
   setup(props) {
-    const { toggleTodo, removeTodo, updateTodo, rowClass } = todoMethods();
+    const { toggleTodo, removeTodo, updateTodo, rowClass } = todoMethods()
 
     let cat_name = computed(() => {
       switch (props.cat_id) {
         case 1:
-          return "daily_task";
-          break;
+          return "daily_task"
+          break
         case 2:
-          return "work_planing";
-          break;
+          return "work_planing"
+          break
         case 3:
-          return "shopping_lists";
-          break;
+          return "shopping_lists"
+          break
         case 4:
-          return "reminder";
-          break;
+          return "reminder"
+          break
         default:
-          return "";
+          return ""
       }
-    });
+    })
 
     return {
       rowClass,
       toggleTodo,
       removeTodo,
       updateTodo,
-      cat_name,
-    };
-  },
-});
+      cat_name
+    }
+  }
+})
 </script>
 <style>
 .textThrough {

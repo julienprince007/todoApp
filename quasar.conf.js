@@ -7,9 +7,11 @@
 // https://quasar.dev/quasar-cli/quasar-conf-js
 
 /* eslint-env node */
-const ESLintPlugin = require("eslint-webpack-plugin");
-const { configure } = require("quasar/wrappers");
-const envparser = require("./src/config/envparser.js");
+const ESLintPlugin = require("eslint-webpack-plugin")
+const { configure } = require("quasar/wrappers")
+const envparser = require("./src/config/envparser.js")
+const path = require("path")
+
 module.exports = configure(function (/* ctx */) {
   return {
     // https://quasar.dev/quasar-cli/supporting-ts
@@ -21,7 +23,7 @@ module.exports = configure(function (/* ctx */) {
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
     // https://quasar.dev/quasar-cli/boot-files
-    boot: ["rxdb/index", "navigationGuards"],
+    boot: ["rxdb/index", "navigationGuards", "i18n"],
 
     // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-css
     css: ["app.sass"],
@@ -37,7 +39,7 @@ module.exports = configure(function (/* ctx */) {
       // 'roboto-font-latin-ext', // this or either 'roboto-font', NEVER both!
 
       "roboto-font", // optional, you are not bound to it
-      "material-icons", // optional, you are not bound to it
+      "material-icons" // optional, you are not bound to it
     ],
 
     // Full list of options: https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-build
@@ -59,21 +61,23 @@ module.exports = configure(function (/* ctx */) {
 
       // Options below are automatically set depending on the env, set them if you want to override
       // extractCSS: false,
-
+      chainWebpack(chain) {
+        chain.resolve.alias.set(
+          "myalias",
+          path.resolve(__dirname, "./src/somefolder")
+        )
+        const nodePolyfillWebpackPlugin = require("node-polyfill-webpack-plugin")
+        chain.plugin("node-polyfill").use(nodePolyfillWebpackPlugin)
+      }
       // https://quasar.dev/quasar-cli/handling-webpack
       // "chain" is a webpack-chain object https://github.com/neutrinojs/webpack-chain
-      chainWebpack(chain) {
-        chain
-          .plugin("eslint-webpack-plugin")
-          .use(ESLintPlugin, [{ extensions: ["js", "vue"] }]);
-      },
     },
 
     // Full list of options: https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-devServer
     devServer: {
       https: false,
       port: 8080,
-      open: ["google chrome"], // opens browser window automatically
+      open: ["google chrome"] // opens browser window automatically
     },
 
     // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-framework
@@ -91,7 +95,7 @@ module.exports = configure(function (/* ctx */) {
       // directives: [],
 
       // Quasar plugins
-      plugins: ["Dialog", "LocalStorage", "Notify"],
+      plugins: ["Dialog", "LocalStorage", "Notify"]
     },
 
     // animations: 'all', // --- includes all animations
@@ -100,7 +104,7 @@ module.exports = configure(function (/* ctx */) {
 
     // https://quasar.dev/quasar-cli/developing-ssr/configuring-ssr
     ssr: {
-      pwa: false,
+      pwa: false
     },
 
     // https://quasar.dev/quasar-cli/developing-pwa/configuring-pwa
@@ -113,7 +117,7 @@ module.exports = configure(function (/* ctx */) {
       chainWebpackCustomSW(chain) {
         chain
           .plugin("eslint-webpack-plugin")
-          .use(ESLintPlugin, [{ extensions: ["js"] }]);
+          .use(ESLintPlugin, [{ extensions: ["js"] }])
       },
 
       manifest: {
@@ -128,30 +132,30 @@ module.exports = configure(function (/* ctx */) {
           {
             src: "icons/icon-128x128.png",
             sizes: "128x128",
-            type: "image/png",
+            type: "image/png"
           },
           {
             src: "icons/icon-192x192.png",
             sizes: "192x192",
-            type: "image/png",
+            type: "image/png"
           },
           {
             src: "icons/icon-256x256.png",
             sizes: "256x256",
-            type: "image/png",
+            type: "image/png"
           },
           {
             src: "icons/icon-384x384.png",
             sizes: "384x384",
-            type: "image/png",
+            type: "image/png"
           },
           {
             src: "icons/icon-512x512.png",
             sizes: "512x512",
-            type: "image/png",
-          },
-        ],
-      },
+            type: "image/png"
+          }
+        ]
+      }
     },
 
     // Full list of options: https://quasar.dev/quasar-cli/developing-cordova-apps/configuring-cordova
@@ -161,7 +165,7 @@ module.exports = configure(function (/* ctx */) {
 
     // Full list of options: https://quasar.dev/quasar-cli/developing-capacitor-apps/configuring-capacitor
     capacitor: {
-      hideSplashscreen: true,
+      hideSplashscreen: true
     },
 
     // Full list of options: https://quasar.dev/quasar-cli/developing-electron-apps/configuring-electron
@@ -182,22 +186,22 @@ module.exports = configure(function (/* ctx */) {
       builder: {
         // https://www.electron.build/configuration/configuration
 
-        appId: "todo",
+        appId: "todo"
       },
 
       // "chain" is a webpack-chain object https://github.com/neutrinojs/webpack-chain
       chainWebpackMain(chain) {
         chain
           .plugin("eslint-webpack-plugin")
-          .use(ESLintPlugin, [{ extensions: ["js"] }]);
+          .use(ESLintPlugin, [{ extensions: ["js"] }])
       },
 
       // "chain" is a webpack-chain object https://github.com/neutrinojs/webpack-chain
       chainWebpackPreload(chain) {
         chain
           .plugin("eslint-webpack-plugin")
-          .use(ESLintPlugin, [{ extensions: ["js"] }]);
-      },
-    },
-  };
-});
+          .use(ESLintPlugin, [{ extensions: ["js"] }])
+      }
+    }
+  }
+})

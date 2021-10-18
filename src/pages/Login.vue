@@ -31,57 +31,69 @@
 </template>
 
 <script>
-import { defineComponent, ref, inject } from "vue";
-import { useRouter } from "vue-router";
-import { useStore } from "vuex";
-import axios from "axios";
+import { defineComponent, ref } from "vue"
+import { useStore } from "vuex"
+import { useI18n } from "vue-i18n"
+import { useQuasar } from "quasar"
+
+import { useRouter } from "vue-router"
+import axios from "axios"
+import rxdb from "@sowell/rxdb"
 
 export default defineComponent({
   name: "User",
   setup() {
-    const router = useRouter();
-    const store = useStore();
+    const store = useStore()
+    const $q = useQuasar()
+    const router = useRouter()
+    const { createDb } = rxdb()
+    const loading = ref(false)
+    const { t } = useI18n()
 
-    const loading = ref(false);
-
-    const name = ref("");
-    const password = ref("");
-    const { createDb } = inject("DB");
+    const name = ref("")
+    const password = ref("")
 
     const onSubmit = async () => {
-      loading.value = true;
-      axios
-        .post("http://localhost:3000/login", {
-          username: name.value,
-          password: password.value,
-        })
-        .then(async function (response) {
-          const { data } = response;
-          try {
-            await createDb(data.user.name, data.user.token);
-            store.commit("rxdb/SET_DBNAME", data.user);
-            loading.value = true;
-            setTimeout(() => {
-              loading.value = false;
-              router.push(`/todo/${data.user.id}`);
-            }, 500);
-          } catch (error) {
-            console.log(error);
-            loading.value = false;
-          }
-        })
-        .catch(function (error) {
-          loading.value = false;
-          console.log(error);
-        });
-    };
+      if (name.value !== "" && password.value !== "") {
+        loading.value = true
+        axios
+          .post("http://localhost:4300/login", {
+            username: name.value,
+            password: password.value
+          })
+          .then(async function (response) {
+            const { data } = response
+            console.log("token", data.user.token)
+            store.commit("rxdb/setUser", data.user)
+            try {
+              loading.value = true
+              await createDb(data.user.name)
+              setTimeout(() => {
+                loading.value = false
+                router.push(`/todo/${data.user.id}`)
+              }, 500)
+            } catch (error) {
+              console.log(error)
+              loading.value = false
+            }
+          })
+          .catch(function (error) {
+            $q.notify({
+              message: t("failed"),
+              type: "negative"
+            })
+            loading.value = false
+            console.error(error)
+          })
+      }
+    }
 
     return {
       name,
       password,
       onSubmit,
-      loading,
-    };
-  },
-});
+      loading
+    }
+  }
+})
 </script>

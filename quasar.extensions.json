@@ -5,5 +5,11 @@
     "common_root_object": "none",
     "create_env_files": false,
     "add_env_to_gitignore": true
+  },
+  "@sowell/rxdb": {
+    "server_graphql_base_url": "https://rested-woodcock-48.hasura.app/v1/graphql",
+    "server_graphql_base_url_subscription": "wss://rested-woodcock-48.hasura.app/v1/graphql",
+    "vuex_getters_token": "rxdb/getToken",
+    "vuex_getters_db_name": "rxdb/getDbName"
   }
 }

@@ -1,19 +1,17 @@
 <template>
   <div class="container">
-    <div>
-      <Login />
-    </div>
+    <Login />
   </div>
 </template>
 
 <script>
-import { defineComponent } from "vue";
-import Login from "./Login";
+import { defineComponent } from "vue"
+import Login from "./Login"
 
 export default defineComponent({
   name: "PageIndex",
   components: {
-    Login,
-  },
-});
+    Login
+  }
+})
 </script>

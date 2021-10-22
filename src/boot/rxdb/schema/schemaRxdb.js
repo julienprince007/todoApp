@@ -15,9 +15,6 @@ const schema = {
       category_id: {
         type: "number"
       },
-      company_id: {
-        type: "number"
-      },
       text: {
         type: "string"
       },
@@ -33,7 +30,6 @@ const schema = {
         format: "date-time"
       }
     },
-    required: ["text", "isCompleted", "id", "user_id"],
     indexes: ["created_at"]
   }
 }

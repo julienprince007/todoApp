@@ -23,7 +23,6 @@ export const todoPullQueryBuilder = (doc) => {
                   updated_at
                   user_id
                   category_id
-                  company_id
                 }
               }`
   return {
